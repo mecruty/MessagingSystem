@@ -16,3 +16,10 @@ This would be a digital post office, consisting of a central system where, one u
 ### Personal Interest
 
 I like this idea because there are many more possibilites that could be added onto the basic idea. For example, accounts could be password protected, there could be notifications for unread messages, there could be anonymous messages, *etc...*
+
+## User Stories
+
+- As a user, I want to be able to add a message to continue a particular conversation.
+- As a user, I want to be able to receive messages and view a past conversation.
+- As a user, I want to be able to set a password to my account.
+- As a user, I want to be able to send anonymous messages.
