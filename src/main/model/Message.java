@@ -4,10 +4,12 @@ package model;
 public class Message {
 
     private String value;
+    private String sender;
 
     // EFFECTS: Creates a message with a value and a sender
-    public Message(String value) {
+    public Message(String sender, String value) {
         this.value = value;
+        this.sender = sender;
     }
 
     public String getValue() {
@@ -19,11 +21,10 @@ public class Message {
     }
 
     public String getSender() {
-        return "";
+        return sender;
     }
 
-    public void setSender(String value) {
-        //stub
+    public void setSender(String sender) {
+        this.sender = sender;
     }
-
 }
