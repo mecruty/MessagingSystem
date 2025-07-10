@@ -10,11 +10,12 @@ public class MessageTest {
     
     @BeforeEach
     public void runBefore() {
-        testMessage = new Message("hello!");
+        testMessage = new Message("Alice", "hello!");
     }
 
     @Test
     public void testConstructor() {
         assertEquals(testMessage.getValue(), "hello!");
+        assertEquals(testMessage.getSender(), "Alice");
     }
 }
