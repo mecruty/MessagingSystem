@@ -1,11 +1,11 @@
 package model;
 
-// Represents a single message, one string
+// Represents a single message, with a value and a sender
 public class Message {
 
     private String value;
 
-    // EFFECTS: Creates a message with a value.
+    // EFFECTS: Creates a message with a value and a sender
     public Message(String value) {
         this.value = value;
     }
@@ -17,4 +17,13 @@ public class Message {
     public void setValue(String value) {
         this.value = value;
     }
+
+    public String getSender() {
+        return "";
+    }
+
+    public void setSender(String value) {
+        //stub
+    }
+
 }
