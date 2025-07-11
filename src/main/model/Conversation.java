@@ -5,14 +5,15 @@ import java.util.*;
 // Represents a conversation having a list of messages and the accounts of the two parties
 public class Conversation {
 
+    // REQUIRES: parties.length == 2
     // EFFECTS: Creates an empty conversation between two people
-    public Conversation() {
+    public Conversation(Account[] parties) {
         // stub
     }
 
     // MODIFIES: this
     // EFFECTS: Adds a message to the end of the conversation
-    public void addMessage() {
+    public void addMessage(Message message) {
         //stub
     }
 
@@ -40,7 +41,8 @@ public class Conversation {
         return null;
     }
 
-    public void setParties() {
+    // REQUIRES: parties.length == 2
+    public void setParties(Account[] parties) {
         //stub
     }
 
