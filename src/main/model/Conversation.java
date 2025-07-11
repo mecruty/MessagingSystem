@@ -2,12 +2,11 @@ package model;
 
 import java.util.*;
 
-// Represents a conversation having a list of messages and the accounts of the two parties
+// Represents a conversation having a list of messages
 public class Conversation {
 
-    // REQUIRES: parties.length == 2
     // EFFECTS: Creates an empty conversation between two people
-    public Conversation(Account[] parties) {
+    public Conversation() {
         // stub
     }
 
@@ -36,14 +35,4 @@ public class Conversation {
     public void setMessages(List<Message> messages) {
        //stub
     }
-
-    public Account[] getParties() {
-        return null;
-    }
-
-    // REQUIRES: parties.length == 2
-    public void setParties(Account[] parties) {
-        //stub
-    }
-
 }
