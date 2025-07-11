@@ -12,14 +12,8 @@ public class Conversation {
 
     // MODIFIES: this
     // EFFECTS: Adds a message to the end of the conversation
-    public void addMessage(Message message) {
+    public void addMessage(Message m) {
         //stub
-    }
-
-    // EFFECTS: Returns the given number of messages, starting from the newest
-    //          If more messages are requested then have been sent, will return all messages
-    public List<Message> loadNumMessages(int numToLoad) {
-        return null;
     }
 
     // EFFECTS: Returns the given number of messages, starting from the given index
