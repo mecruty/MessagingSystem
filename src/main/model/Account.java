@@ -17,12 +17,7 @@ public class Account {
 
     }
 
-    // EFFECTS: Returns the given number of messages in the conversaion with acc, starting from the newest message.
-    //          If more messages are requested than actually exist, returns all messages.
-    public List<Message> readConversation(Account acc, int numMessagesToRead) {
-        return null;
-    }
-
+    // REQUIRES: numMessagesToRead > 0, startIndex >= 0
     // EFFECTS: Returns the given number of messages in the conversaion with acc, starting from startIndex.
     //          If more messages are requested than actually exist, returns all messages.
     public List<Message> readConversation(Account acc, int numMessagesToRead, int startIndex) {
@@ -31,17 +26,6 @@ public class Account {
 
     // EFFECTS: Adds message to the conversation between this and acc
     public void sendMessage(Account acc, Message message) {
-        //stub
-    }
-
-    // EFFECTS: Gets the specific conversation between this and acc.
-    public Conversation getConversationWithAccount(Account acc) {
-        return null;
-    }
-
-    // MODFIES: this, acc
-    // EFFECTS: Sets the conversation between this and acc to con 
-    public void setConversationWithAccount(Account acc, Conversation con) {
         //stub
     }
 
