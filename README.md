@@ -22,4 +22,4 @@ I like this idea because there are many more possibilites that could be added on
 - As a user, I want to be able to add a message to continue a particular conversation.
 - As a user, I want to be able to receive messages and view a past conversation.
 - As a user, I want to be able to set a password to my account.
-- As a user, I want to be able to send anonymous messages.
+- As a user, I want to be able to delete messages.
