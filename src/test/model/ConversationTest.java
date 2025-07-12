@@ -23,7 +23,7 @@ public class ConversationTest {
 
     @Test
     public void testConstructor() {
-        assertEquals(conversationTest.getMessages().size(), 0);
+        assertTrue(conversationTest.getMessages().isEmpty());
     }
 
     @Test
