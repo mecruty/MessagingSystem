@@ -37,7 +37,7 @@ public class ConversationTest {
     public void testAddSingleMessage() {
         conversationTest.addMessage(message1);
         assertEquals(conversationTest.getMessages().size(), 1);
-        assertEquals(conversationTest.getMessages().get(0), "hi");
+        assertEquals(conversationTest.getMessages().get(0), message1);
     }
 
     @Test
@@ -55,7 +55,7 @@ public class ConversationTest {
         conversationTest.addMessage(message2);
         conversationTest.addMessage(message3);
         conversationTest.addMessage(message4);
-        assertEquals(conversationTest.loadNumMessages(1, 0), message1);
+        assertEquals(conversationTest.loadNumMessages(1, 0), List.of(message1));
         assertEquals(conversationTest.loadNumMessages(2, 2), List.of(message3, message4));
     }
 
