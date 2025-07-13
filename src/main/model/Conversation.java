@@ -20,7 +20,7 @@ public class Conversation {
 
     // MODIFIES: this
     // EFFECTS: Removes a message from the end of the conversation
-    public void removeMessage(Message m) {
+    public void removeMessage() {
         messages.remove(messages.size() - 1);
     }
 
