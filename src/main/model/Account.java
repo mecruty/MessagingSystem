@@ -17,7 +17,7 @@ public class Account {
         conversations = new HashMap<>();
     }
 
-    // MODIFIES: this, otherAccount
+    // MODIFIES: this, acc
     // EFFECTS: Adds a shared empty Conversation to this and acc
     public void beginConversation(Account acc) {
         Conversation convo = new Conversation();
@@ -34,10 +34,18 @@ public class Account {
         return convo.loadNumMessages(numMessagesToRead, startIndex);
     }
 
+    // MODIFIES: conversations.get(acc)
     // EFFECTS: Adds message to the conversation between this and acc
     public void sendMessage(Account acc, Message m) {
         Conversation convo = conversations.get(acc);
         convo.addMessage(m);
+    }
+
+    // MODIFIES: conversations.get(acc)
+    // EFFECTS: Deletes the last message from the conversation between this and acc
+    public void deleteMessage(Account acc, Message m) {
+        Conversation convo = conversations.get(acc);
+        convo.removeMessage(m);
     }
 
     // EFFECTS: Returns true if given name and password matches this.name and

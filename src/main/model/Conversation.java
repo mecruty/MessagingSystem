@@ -18,6 +18,12 @@ public class Conversation {
         messages.add(m);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Removes a message from the end of the conversation
+    public void removeMessage(Message m) {
+        messages.remove(messages.size() - 1);
+    }
+
     // REQUIRES: numToLoad > 0, startIndex >= 0
     // EFFECTS: Returns the given number of messages, starting from the given index
     //          If more messages are requested then have been sent, will return all messages
