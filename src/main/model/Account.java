@@ -42,10 +42,17 @@ public class Account {
     }
 
     // MODIFIES: conversations.get(acc)
-    // EFFECTS: Deletes the last message from the conversation between this and acc
-    public void deleteMessage(Account acc, Message m) {
+    // EFFECTS: If this sent the last message, deletes said last message from the conversation between this and acc
+    //          Does nothing when there are no messages
+    public void deleteMessage(Account acc) {
         Conversation convo = conversations.get(acc);
-        convo.removeMessage(m);
+        List<Message> messages = convo.getMessages();
+        if (messages.size() != 0) {
+            Message lastMessage = messages.get(messages.size() - 1);
+            if (this.equals(lastMessage.getSender())) {
+                convo.removeMessage();
+            }
+        }
     }
 
     // EFFECTS: Returns true if given name and password matches this.name and
