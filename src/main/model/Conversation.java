@@ -37,6 +37,6 @@ public class Conversation {
     }
 
     public void setMessages(List<Message> messages) {
-       this.messages = messages;
+        this.messages = messages;
     }
 }

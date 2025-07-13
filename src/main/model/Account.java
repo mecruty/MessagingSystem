@@ -9,8 +9,9 @@ public class Account {
     private String password;
     private Map<Account, Conversation> conversations;
 
-    // EFFECTS: Creates an Account with the given name, password, and no preexisting conversations
-    public Account(String name, String password) { 
+    // EFFECTS: Creates an Account with the given name, password, and no preexisting
+    //          conversations
+    public Account(String name, String password) {
         this.name = name;
         this.password = password;
         conversations = new HashMap<>();
@@ -25,8 +26,9 @@ public class Account {
     }
 
     // REQUIRES: numMessagesToRead > 0, startIndex >= 0
-    // EFFECTS: Returns the given number of messages in the conversaion with acc, starting from startIndex.
-    //          If more messages are requested than actually exist, returns all messages.
+    // EFFECTS: Returns the given number of messages in the conversaion with acc,
+    //          starting from startIndex.
+    // If more messages are requested than actually exist, returns all messages.
     public List<Message> readConversation(Account acc, int numMessagesToRead, int startIndex) {
         Conversation convo = conversations.get(acc);
         return convo.loadNumMessages(numMessagesToRead, startIndex);
@@ -38,7 +40,8 @@ public class Account {
         convo.addMessage(m);
     }
 
-    // EFFECTS: Returns true if given name and password matches this.name and this.password
+    // EFFECTS: Returns true if given name and password matches this.name and
+    //          this.password
     public boolean checkLoginDetails(String name, String password) {
         boolean check = this.name.equals(name) && this.password.equals(password);
         return check;
