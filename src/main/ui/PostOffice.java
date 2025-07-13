@@ -147,7 +147,7 @@ public class PostOffice {
         List<Message> messages = acc.readConversation(otherAcc, numToLoad, startIndex);
         loaded.addAll(messages);
         System.out.println("\n_________________________");
-        for (int i = 0; i < loaded.size(); i++) {
+        for (int i = loaded.size() - 1; i >= 0; i--) {
             String sender = loaded.get(i).getSender().getName();
             String value = loaded.get(i).getValue();
             System.out.println(sender + ": " + value);
