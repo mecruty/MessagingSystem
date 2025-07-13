@@ -50,6 +50,24 @@ public class ConversationTest {
     }
 
     @Test
+    public void testRemoveSingleMessage() {
+        conversationTest.addMessage(message1);
+        conversationTest.removeMessage();
+        assertEquals(conversationTest.getMessages().size(), 0);
+    }
+
+    @Test
+    public void testRemoveMultipleMessages() {
+        conversationTest.addMessage(message1);
+        conversationTest.addMessage(message2);
+        conversationTest.addMessage(message3);
+        conversationTest.removeMessage();
+        conversationTest.removeMessage();
+        assertEquals(conversationTest.getMessages().size(), 1);
+        assertEquals(conversationTest.getMessages().get(0), message1);
+    }
+
+    @Test
     public void testLoadNumMessages() {
         conversationTest.addMessage(message1);
         conversationTest.addMessage(message2);
