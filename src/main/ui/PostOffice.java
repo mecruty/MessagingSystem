@@ -110,21 +110,31 @@ public class PostOffice {
 
     // EFFECT: Selects a conversation to read, processing user input
     private void selectConversation(Account acc, Account otherAcc) {
-        List<Message> loadedMessages = new ArrayList<>();
         System.out.println("\tType \"leave\" to leave the conversation");
         System.out.println("\tType \"load n\" to load n more messages (do this before sending any messages)");
+        System.out.println("\tType \"delete\" to delete the last message if it yours");
         System.out.println("\tType and enter to send a message");
 
+        System.out.print(acc.getName() + ": ");
         String next = sc.nextLine();
         if (!next.equals("leave")) {
-            int numLoaded = 0;
-            while (next.matches("load [0-9]+")) {
-                int num = Integer.parseInt(next.substring(next.indexOf(" ") + 1));
-                loadMessages(acc, otherAcc, loadedMessages, num, numLoaded);
-                numLoaded += num;
-                next = sc.nextLine();
-            }
+            loadMessagesLoop(acc, otherAcc, next);
             sendMessageLoop(acc, otherAcc, next);
+        }
+
+        System.out.println("\nLeaving conversation, returning to menu");
+    }
+
+    // EFFECT: Processes user input to load messages
+    private void loadMessagesLoop(Account acc, Account otherAcc, String next) {
+        List<Message> loadedMessages = new ArrayList<>();
+        int numLoaded = 0;
+        while (next.matches("load [0-9]+")) {
+            int num = Integer.parseInt(next.substring(next.indexOf(" ") + 1));
+            loadMessages(acc, otherAcc, loadedMessages, num, numLoaded);
+            numLoaded += num;
+            System.out.print(acc.getName() + ": ");
+            next = sc.nextLine();
         }
     }
 
@@ -132,12 +142,18 @@ public class PostOffice {
     private void sendMessageLoop(Account acc, Account otherAcc, String next) {
         boolean leaveConversation = false;
         while (!leaveConversation) {
-            if (next.equals("leave")) {
+            if (next.matches("\\s*")) {
+                continue;
+            } else if (next.equals("leave")) {
                 leaveConversation = true;
                 continue;
+            } else if (next.equals("delete")) {
+                acc.deleteMessage(otherAcc);
+                System.out.println("Delete command activated");
             } else {
                 acc.sendMessage(otherAcc, new Message(acc, next));
             }
+            System.out.print(acc.getName() + ": ");
             next = sc.nextLine();
         }
     }
