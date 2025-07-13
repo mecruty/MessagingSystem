@@ -43,8 +43,7 @@ public class Account {
     // EFFECTS: Returns true if given name and password matches this.name and
     //          this.password
     public boolean checkLoginDetails(String name, String password) {
-        boolean check = this.name.equals(name) && this.password.equals(password);
-        return check;
+        return this.name.equals(name) && this.password.equals(password);
     }
 
     public String getName() {
