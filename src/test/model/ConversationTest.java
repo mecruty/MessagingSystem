@@ -11,14 +11,18 @@ public class ConversationTest {
     private Conversation conversationTest;
     private Account alice = new Account("Alice", "1234");
     private Account bob = new Account("Bob", "2345");
-    private Message message1 = new Message(alice, "hi");
-    private Message message2 = new Message(bob, "bye");
-    private Message message3 = new Message(alice, "hello");
-    private Message message4 = new Message(bob, "goodbye");
+    private Message message1;
+    private Message message2;
+    private Message message3;
+    private Message message4;
 
     @BeforeEach
     public void runBefore() {
         conversationTest = new Conversation();
+        message1 = new Message(alice, "hi");
+        message2 = new Message(bob, "bye");
+        message3 = new Message(alice, "hello");
+        message4 = new Message(bob, "goodbye");
     }
 
     @Test

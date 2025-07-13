@@ -10,16 +10,21 @@ import java.util.*;
 public class AccountTest {
     private Account testAccount;
     private Account testAccount2;
-    private Conversation convo = new Conversation();
-    private Message message1 = new Message(testAccount, "hi");
-    private Message message2 = new Message(testAccount, "bye");
-    private Message message3 = new Message(testAccount, "hello");
-    private Message message4 = new Message(testAccount, "goodbye");
+    private Conversation convo;
+    private Message message1;
+    private Message message2;
+    private Message message3;
+    private Message message4;
 
     @BeforeEach
     public void runBefore() {
         testAccount = new Account("Alice", "1234");
         testAccount2 = new Account("Bob", "2345");
+        convo = new Conversation();
+        message1 = new Message(testAccount, "hi");
+        message2 = new Message(testAccount, "bye");
+        message3 = new Message(testAccount, "hello");
+        message4 = new Message(testAccount, "goodbye");
     }
 
     @Test
@@ -97,30 +102,44 @@ public class AccountTest {
     public void testDeleteMultipleMessages() {
         testAccount.beginConversation(testAccount2);
         testAccount.sendMessage(testAccount2, message1);
-        testAccount2.sendMessage(testAccount, message2);
+        testAccount.sendMessage(testAccount2, message2);
         testAccount.sendMessage(testAccount2, message3);
         testAccount.deleteMessage(testAccount2);
-        testAccount2.deleteMessage(testAccount);
-        assertEquals(testAccount.getConversations().get(testAccount2).getMessages(),
-                List.of(message1));
-        assertEquals(testAccount2.getConversations().get(testAccount).getMessages(),
-                List.of(message1));
+        testAccount.deleteMessage(testAccount2);
+        assertEquals(testAccount.getConversations().get(testAccount2).getMessages(), List.of(message1));
+        assertEquals(testAccount2.getConversations().get(testAccount).getMessages(), List.of(message1));
     }
 
     @Test
     public void testDeleteMessagesWrongSender() {
         testAccount.beginConversation(testAccount2);
         testAccount.sendMessage(testAccount2, message1);
-        testAccount2.sendMessage(testAccount, message2);
+        testAccount.sendMessage(testAccount2, message2);
         testAccount.sendMessage(testAccount2, message3);
         testAccount.deleteMessage(testAccount2);
-        testAccount.deleteMessage(testAccount2);
-        testAccount.deleteMessage(testAccount2);
+        testAccount2.deleteMessage(testAccount);
+        testAccount2.deleteMessage(testAccount);
         assertEquals(testAccount.getConversations().get(testAccount2).getMessages(),
                 List.of(message1, message2));
         assertEquals(testAccount2.getConversations().get(testAccount).getMessages(),
                 List.of(message1, message2));
     }
+
+    @Test
+    public void testDeleteMessagesDeletedAll() {
+        testAccount.beginConversation(testAccount2);
+        testAccount.sendMessage(testAccount2, message1);
+        testAccount.sendMessage(testAccount2, message2);
+        testAccount.sendMessage(testAccount2, message3);
+        testAccount.deleteMessage(testAccount2);
+        testAccount.deleteMessage(testAccount2);
+        testAccount.deleteMessage(testAccount2);
+        testAccount.deleteMessage(testAccount2);
+        testAccount.deleteMessage(testAccount2);
+        assertEquals(testAccount.getConversations().get(testAccount2).getMessages(), List.of());
+        assertEquals(testAccount2.getConversations().get(testAccount).getMessages(), List.of());
+    }
+
 
     @Test
     public void testReadConversation() {
