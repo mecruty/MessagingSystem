@@ -1,6 +1,7 @@
 package ui;
 
-import java.util.Scanner;
+import java.util.*;
+import java.util.Map.Entry;
 
 import model.Account;
 import model.Conversation;
@@ -10,57 +11,170 @@ import model.Message;
 public class PostOffice {
 
     private Scanner sc;
+    private Map<String, Account> accounts;
 
     // EFFECTS: Runs the post office.
     public PostOffice() {
-
+        runPostOffice();
     }
 
     // MODIFIES: this
     // EFFECTS: Processes user input
     private void runPostOffice() {
+        sc = new Scanner(System.in);
+        accounts = new HashMap<>();
+        boolean quit = false;
+        String next;
 
+        while (!quit) {
+            System.out.println("\nWelcome to the post office, to quit type \"quit\"");
+            System.out.println("To login/create an account, enter a name:");
+            next = sc.nextLine();
+            if (next.equals("quit")) {
+                quit = true;
+            } else {
+                String name = next;
+                System.out.println("\nEnter your password:");
+                login(name, sc.nextLine());
+            }
+        }
+
+        System.out.println("Bye!");
     }
 
     // MODIFIES: this
-    // EFFECTS: Initializes fields
-    private void setUp() {
-
-    }
-
     // EFFECT: Processes user input for the login processes
-    private void login() {
-
-    }
-
-    // EFFECT: Returns true if the account name already exists.
-    private boolean matchesExistingAccount() {
-
-    }
-
-    // MODIFIES: this
-    // EFFECT: Creates a new account with a unique name and password
-    private void createAccount() {
-
+    private void login(String name, String password) {
+        if (accounts.containsKey(name)) {
+            Account acc = accounts.get(name);
+            if (acc.checkLoginDetails(name, password)) {
+                System.out.println("\nSucessfully logged in!");
+                enterAccount(name);
+            } else {
+                System.out.println("\nWrong password, please try again.");
+            }
+        } else {
+            System.out.println("\nThat account does not exist, would you like to create a new account? (y/n)");
+            String next = sc.nextLine();
+            if (next.equalsIgnoreCase("y") || next.equalsIgnoreCase("yes")) {
+                accounts.put(name, new Account(name, password));
+            }
+        }
     }
 
     // EFFECT: Processes user input after entering account
-    private void enterAccount() {
+    private void enterAccount(String name) {
+        Account acc = accounts.get(name);
+        boolean logout = false;
+        String next;
 
+        while (!logout) {
+            System.out.println("\nWhat would you like to do?");
+            System.out.println("\tType \"1\" to view past conversations.");
+            System.out.println("\tType \"2\" to create a new conversation.");
+            System.out.println("\tType \"3\" to logout.");
+            next = sc.nextLine();
+            if (next.equals("1")) {
+                loadConversations(acc);
+            } else if (next.equals("2")) {
+                createNewConversation(acc);
+            } else if (next.equals("3")) {
+                logout = true;
+            }
+        }
+
+        logout();
     }
 
     // EFFECT: Loads names of past conversations
-    private void loadConversations() {
-
+    private void loadConversations(Account acc) {
+        System.out.println("\nYou have exisiting conversations with:");
+        Set<Entry<Account, Conversation>> entries = acc.getConversations().entrySet();
+        for (Entry<Account, Conversation> entry : entries) {
+            System.out.println("\t" + entry.getKey().getName());
+        }
+        System.out.println("Enter who you would like to talk to:");
+        String next = sc.nextLine();
+        if (!accounts.containsKey(next)) {
+            System.out.println("\nThat person does not exist, returning to menu");
+        } else {
+            Account otherAcc = accounts.get(next);
+            if (acc.getConversations().containsKey(otherAcc)) {
+                System.out.println("\nEntering conversation:");
+                selectConversation(acc, otherAcc);
+            } else {
+                System.out.println("\nYou do not have a conversation with that person, returning to menu");
+            }
+        }
     }
 
     // EFFECT: Selects a conversation to read, processing user input
-    private void selectConversation() {
+    private void selectConversation(Account acc, Account otherAcc) {
+        List<Message> loadedMessages = new ArrayList<>();
+        System.out.println("\tType \"leave\" to leave the conversation");
+        System.out.println("\tType \"load n\" to load n more messages (do this before sending any messages)");
+        System.out.println("\tType and enter to send a message");
 
+        String next = sc.nextLine();
+        if (!next.equals("leave")) {
+            int numLoaded = 0;
+            while (next.matches("load [0-9]+")) {
+                int num = Integer.parseInt(next.substring(next.indexOf(" ") + 1));
+                loadMessages(acc, otherAcc, loadedMessages, num, numLoaded);
+                numLoaded += num;
+                next = sc.nextLine();
+            }
+            sendMessageLoop(acc, otherAcc, next);
+        }
+    }
+
+    // EFFECT: Processes user input to send/delete messages
+    private void sendMessageLoop(Account acc, Account otherAcc, String next) {
+        boolean leaveConversation = false;
+        while (!leaveConversation) {
+            if (next.equals("leave")) {
+                leaveConversation = true;
+                continue;
+            } else {
+                acc.sendMessage(otherAcc, new Message(acc, next));
+            }
+            next = sc.nextLine();
+        }
+    }
+
+    // EFFECT: Loads and outputs more messages
+    private void loadMessages(Account acc, Account otherAcc, List<Message> loaded, int numToLoad, int startIndex) {
+        List<Message> messages = acc.readConversation(otherAcc, numToLoad, startIndex);
+        loaded.addAll(messages);
+        System.out.println("\n_________________________");
+        for (int i = 0; i < loaded.size(); i++) {
+            String sender = loaded.get(i).getSender().getName();
+            String value = loaded.get(i).getValue();
+            System.out.println(sender + ": " + value);
+        }
     }
 
     // EFFECT: Creates a new conversation
-    private void createNewConversation() {
+    private void createNewConversation(Account acc) {
+        System.out.println("Enter who you would like to create a conversation with?");
+        String next = sc.nextLine();
+        if (!accounts.containsKey(next)) {
+            System.out.println("\nThat person does not exist, returning to menu");
+        } else {
+            Account otherAcc = accounts.get(next);
+            if (acc.getConversations().containsKey(otherAcc)) {
+                System.out.println("\nYou already have a conversation with that person, returning to menu");
+            } else {
+                acc.beginConversation(otherAcc);
+                System.out.println("\nSuccessfully created conversation with " + otherAcc.getName() + ".");
+                System.out.println("Returning to menu");
+            }
+        }
+    }
 
+    // EFFECT: Logs out of account
+    private void logout() {
+        System.out.println("\nLogged out");
+        System.out.println("See you next time!");
     }
 }
