@@ -7,7 +7,7 @@ import model.Account;
 import model.Conversation;
 import model.Message;
 
-// TODO
+// A post office, tracking every account
 public class PostOffice {
 
     private Scanner sc;
@@ -62,6 +62,7 @@ public class PostOffice {
         }
     }
 
+    // MODIFIES: this
     // EFFECT: Processes user input after entering account
     private void enterAccount(String name) {
         Account acc = accounts.get(name);
@@ -118,7 +119,7 @@ public class PostOffice {
         System.out.print(acc.getName() + ": ");
         String next = sc.nextLine();
         if (!next.equals("leave")) {
-            loadMessagesLoop(acc, otherAcc, next);
+            next = loadMessagesLoop(acc, otherAcc, next);
             sendMessageLoop(acc, otherAcc, next);
         }
 
@@ -126,7 +127,7 @@ public class PostOffice {
     }
 
     // EFFECT: Processes user input to load messages
-    private void loadMessagesLoop(Account acc, Account otherAcc, String next) {
+    private String loadMessagesLoop(Account acc, Account otherAcc, String next) {
         List<Message> loadedMessages = new ArrayList<>();
         int numMessages = acc.getConversations().get(otherAcc).getMessages().size();
         int numLoaded = 0;
@@ -137,8 +138,11 @@ public class PostOffice {
             System.out.print(acc.getName() + ": ");
             next = sc.nextLine();
         }
+
+        return next;
     }
 
+    // MODIFIES: this
     // EFFECT: Processes user input to send/delete messages
     private void sendMessageLoop(Account acc, Account otherAcc, String next) {
         boolean leaveConversation = false;
@@ -171,6 +175,7 @@ public class PostOffice {
         }
     }
 
+    // MODIFIES: this
     // EFFECT: Creates a new conversation
     private void createNewConversation(Account acc) {
         System.out.println("Enter who you would like to create a conversation with?");
