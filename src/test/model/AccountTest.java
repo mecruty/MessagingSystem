@@ -148,8 +148,8 @@ public class AccountTest {
         testAccount.sendMessage(testAccount2, message2);
         testAccount.sendMessage(testAccount2, message3);
         testAccount.sendMessage(testAccount2, message4);
-        assertEquals(testAccount.readConversation(testAccount2, 1, 0), List.of(message1));
-        assertEquals(testAccount.readConversation(testAccount2, 2, 2), List.of(message3, message4));
+        assertEquals(testAccount.readConversation(testAccount2, 1, 3), List.of(message4));
+        assertEquals(testAccount.readConversation(testAccount2, 2, 2), List.of(message3, message2));
     }
 
     @Test
@@ -159,8 +159,8 @@ public class AccountTest {
         testAccount.sendMessage(testAccount2, message2);
         testAccount.sendMessage(testAccount2, message3);
         testAccount.sendMessage(testAccount2, message4);
-        assertEquals(testAccount.readConversation(testAccount2, 100, 0),
-                List.of(message1, message2, message3, message4));
+        assertEquals(testAccount.readConversation(testAccount2, 100, 3),
+                List.of(message4, message3, message2, message1));
     }
 
     @Test

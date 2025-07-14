@@ -128,10 +128,11 @@ public class PostOffice {
     // EFFECT: Processes user input to load messages
     private void loadMessagesLoop(Account acc, Account otherAcc, String next) {
         List<Message> loadedMessages = new ArrayList<>();
+        int numMessages = acc.getConversations().get(otherAcc).getMessages().size();
         int numLoaded = 0;
         while (next.matches("load [0-9]+")) {
             int num = Integer.parseInt(next.substring(next.indexOf(" ") + 1));
-            loadMessages(acc, otherAcc, loadedMessages, num, numLoaded);
+            loadMessages(acc, otherAcc, loadedMessages, num, numMessages - 1 - numLoaded);
             numLoaded += num;
             System.out.print(acc.getName() + ": ");
             next = sc.nextLine();
@@ -143,7 +144,7 @@ public class PostOffice {
         boolean leaveConversation = false;
         while (!leaveConversation) {
             if (next.matches("\\s*")) {
-                continue;
+                // doNothing
             } else if (next.equals("leave")) {
                 leaveConversation = true;
                 continue;

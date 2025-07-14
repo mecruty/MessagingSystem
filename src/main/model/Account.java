@@ -25,7 +25,7 @@ public class Account {
         acc.getConversations().put(this, convo);
     }
 
-    // REQUIRES: numMessagesToRead > 0, startIndex >= 0
+    // REQUIRES: numMessagesToRead > 0, startIndex >= 0, startIndex < conversationsget(acc).getMessages().size()
     // EFFECTS: Returns the given number of messages in the conversaion with acc,
     //          starting from startIndex.
     // If more messages are requested than actually exist, returns all messages.

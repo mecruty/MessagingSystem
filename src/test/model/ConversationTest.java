@@ -78,7 +78,7 @@ public class ConversationTest {
         conversationTest.addMessage(message3);
         conversationTest.addMessage(message4);
         assertEquals(conversationTest.loadNumMessages(1, 0), List.of(message1));
-        assertEquals(conversationTest.loadNumMessages(2, 2), List.of(message3, message4));
+        assertEquals(conversationTest.loadNumMessages(3, 3), List.of(message4, message3, message2));
     }
 
     @Test
@@ -87,6 +87,6 @@ public class ConversationTest {
         conversationTest.addMessage(message2);
         conversationTest.addMessage(message3);
         conversationTest.addMessage(message4);
-        assertEquals(conversationTest.loadNumMessages(100, 0), List.of(message1, message2, message3, message4));
+        assertEquals(conversationTest.loadNumMessages(100, 3), List.of(message4, message3, message2, message1));
     }
 }
