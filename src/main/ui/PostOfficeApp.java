@@ -6,12 +6,13 @@ import java.util.Map.Entry;
 import model.Account;
 import model.Conversation;
 import model.Message;
+import model.PostOffice;
 
 // An app for running post office
 public class PostOfficeApp {
 
     private Scanner sc;
-    private Map<String, Account> accounts;
+    private PostOffice po;
 
     // EFFECTS: Runs the post office app.
     public PostOfficeApp() {
@@ -22,7 +23,7 @@ public class PostOfficeApp {
     // EFFECTS: Processes user input
     private void runPostOfficeApp() {
         sc = new Scanner(System.in);
-        accounts = new HashMap<>();
+        po = new PostOffice();
         boolean quit = false;
         String next;
 
@@ -45,8 +46,8 @@ public class PostOfficeApp {
     // MODIFIES: this
     // EFFECT: Processes user input for the login processes
     private void login(String name, String password) {
-        if (accounts.containsKey(name)) {
-            Account acc = accounts.get(name);
+        if (po.contains(name)) {
+            Account acc = po.getAccount(name);
             if (acc.checkLoginDetails(name, password)) {
                 System.out.println("\nSucessfully logged in!");
                 enterAccount(name);
@@ -57,7 +58,7 @@ public class PostOfficeApp {
             System.out.println("\nThat account does not exist, would you like to create a new account? (y/n)");
             String next = sc.nextLine();
             if (next.equalsIgnoreCase("y") || next.equalsIgnoreCase("yes")) {
-                accounts.put(name, new Account(name, password));
+                po.addAccount(name, new Account(name, password));
             }
         }
     }
@@ -65,7 +66,7 @@ public class PostOfficeApp {
     // MODIFIES: this
     // EFFECT: Processes user input after entering account
     private void enterAccount(String name) {
-        Account acc = accounts.get(name);
+        Account acc = po.getAccount(name);
         boolean logout = false;
         String next;
 
@@ -96,10 +97,10 @@ public class PostOfficeApp {
         }
         System.out.println("Enter who you would like to talk to:");
         String next = sc.nextLine();
-        if (!accounts.containsKey(next)) {
+        if (!po.contains(next)) {
             System.out.println("\nThat person does not exist, returning to menu");
         } else {
-            Account otherAcc = accounts.get(next);
+            Account otherAcc = po.getAccount(next);
             if (acc.getConversations().containsKey(otherAcc)) {
                 System.out.println("\nEntering conversation:");
                 selectConversation(acc, otherAcc);
@@ -180,10 +181,10 @@ public class PostOfficeApp {
     private void createNewConversation(Account acc) {
         System.out.println("Enter who you would like to create a conversation with?");
         String next = sc.nextLine();
-        if (!accounts.containsKey(next)) {
+        if (!po.contains(next)) {
             System.out.println("\nThat person does not exist, returning to menu");
         } else {
-            Account otherAcc = accounts.get(next);
+            Account otherAcc = po.getAccount(next);
             if (acc.getConversations().containsKey(otherAcc)) {
                 System.out.println("\nYou already have a conversation with that person, returning to menu");
             } else {
