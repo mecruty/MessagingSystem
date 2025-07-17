@@ -26,6 +26,12 @@ public class PostOfficeTest {
     }
 
     @Test
+    public void testSettingAccounts() {
+        postOfficeTest.setAccounts(Map.of("Alice", acc1));
+        assertEquals(postOfficeTest.getAccounts(), Map.of("Alice", acc1));
+    }
+
+    @Test
     public void testAddAccount() {
         postOfficeTest.addAccount("Alice", acc1);
         postOfficeTest.addAccount("Bob", acc2);
