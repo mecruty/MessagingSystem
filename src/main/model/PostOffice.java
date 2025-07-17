@@ -12,18 +12,18 @@ public class PostOffice {
 
     // MODIFIES: this
     // EFFECTS: Adds an empty account to this
-    public void addAccount(Account acc) {
+    public void addAccount(String name, Account acc) {
 
     }
 
     // EFFECTS: Returns an account with given name in getAccounts()
-    public Account getAccount() {
+    public Account getAccount(String name) {
         return null;
     }
 
     // EFFECTS: Returns true if getAccounts() contains acc
-    public void contains(Account acc) {
-
+    public boolean contains(String name) {
+        return false;
     }
 
     public Map<String, Account> getAccounts() {
