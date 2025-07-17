@@ -7,20 +7,20 @@ import model.Account;
 import model.Conversation;
 import model.Message;
 
-// A post office, tracking every account
-public class PostOffice {
+// An app for running post office
+public class PostOfficeApp {
 
     private Scanner sc;
     private Map<String, Account> accounts;
 
-    // EFFECTS: Runs the post office.
-    public PostOffice() {
-        runPostOffice();
+    // EFFECTS: Runs the post office app.
+    public PostOfficeApp() {
+        runPostOfficeApp();
     }
 
     // MODIFIES: this
     // EFFECTS: Processes user input
-    private void runPostOffice() {
+    private void runPostOfficeApp() {
         sc = new Scanner(System.in);
         accounts = new HashMap<>();
         boolean quit = false;
