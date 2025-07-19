@@ -195,6 +195,17 @@ public class PostOfficeApp {
         }
     }
 
+    // EFFECTS: saves the PostOffice to file
+    private void savePostOffice() {
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads PostOffice from file
+    private void loadPostOffice() {
+
+    }
+
     // EFFECT: Logs out of account
     private void logout() {
         System.out.println("\nLogged out");
