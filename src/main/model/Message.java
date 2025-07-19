@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // Represents a single message, with a value and the account that sent it
 public class Message {
 
@@ -10,6 +12,11 @@ public class Message {
     public Message(Account sender, String value) {
         this.value = value;
         this.sender = sender;
+    }
+
+    // EFFECTS: Returns this as a JSON object
+    public JSONObject toJson() {
+        return null;
     }
 
     public String getValue() {

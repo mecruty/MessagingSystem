@@ -61,6 +61,16 @@ public class Account {
         return this.name.equals(name) && this.password.equals(password);
     }
 
+    // EFFECTS: Returns this as a JSON object
+    public JSONObject toJson() {
+        return null;
+    }
+
+    // EFFECTS: Returns conversations in this Account as a JSONObject
+    private JSONObject conversationsToJson() {
+        return null;
+    }
+
     public String getName() {
         return name;
     }

@@ -2,6 +2,8 @@ package model;
 
 import java.util.*;
 
+import org.json.JSONObject;
+
 // Represents a post office, with a list of accounts
 public class PostOffice {
 
@@ -26,6 +28,16 @@ public class PostOffice {
     // EFFECTS: Returns true if getAccounts() contains acc
     public boolean contains(String name) {
         return accounts.containsKey(name);
+    }
+
+    // EFFECTS: Returns this as a JSON object
+    public JSONObject toJson() {
+        return null;
+    }
+
+    // EFFECTS: Returns accounts in this PostOffice as a JSONObject
+    private JSONObject accountsToJson() {
+        return null;
     }
 
     public Map<String, Account> getAccounts() {
