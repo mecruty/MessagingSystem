@@ -2,6 +2,8 @@ package model;
 
 import java.util.*;
 
+import org.json.JSONObject;
+
 // Represents an account, containing a name, password, and a map of all conversations
 public class Account {
 
