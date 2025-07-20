@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import model.PostOffice;
 
 // Represents a writer that writes JSON representation of PostOffice to file
-// Modelled after json demo program
+// Modelled after JsonSerialization Demo
 public class JsonWriter {
 
     private static final int TAB = 4;

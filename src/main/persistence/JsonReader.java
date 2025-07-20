@@ -1,54 +1,100 @@
 package persistence;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import model.Account;
-import model.Conversation;
+import model.Message;
 import model.PostOffice;
 
 // Represents a reader that reads post office information from JSON in file
-// Modelled after json demo program
+// Modelled after JsonSerialization Demo
 public class JsonReader {
+    private String source;
 
     // EFFECTS: Creates a reader to read from source file
     public JsonReader(String source) {
-        
+        this.source = source;
     }
 
     // EFFECTS: Reads PostOffice from file and returns it.
     //          Throws IOException if error occurs while reading file
     public PostOffice read() throws IOException {
-        return null;
+        String jsonData = readFile(source);
+        JSONObject json = new JSONObject(jsonData);
+        return parsePostOffice(json);
     }
 
     // EFFECTS: Reads source files as string and returns it.
     //          Throws IOException if error occurs while reading file
     private String readFile(String source) throws IOException {
-        return "";
+        StringBuilder contentBuilder = new StringBuilder();
+
+        try (Stream<String> stream = Files.lines(Paths.get(source), StandardCharsets.UTF_8)) {
+            stream.forEach(s -> contentBuilder.append(s));
+        }
+
+        return contentBuilder.toString();
     }
 
     // EFFECTS: Parses PostOffice from JSON object and returns it
     private PostOffice parsePostOffice(JSONObject jsonObj) {
-        return null;
+        PostOffice po = new PostOffice();
+        addAccounts(po, jsonObj);
+        return po;
     }
 
     // MODIFIES: po
     // EFFECTS: Parses accounts from JSON object and adds them to PostOffice
     private void addAccounts(PostOffice po, JSONObject jsonObj) {
-
+        JSONArray accounts = jsonObj.names();
+        for (Object account : accounts) {
+            JSONObject accJson = jsonObj.getJSONObject((String) account);
+            String name = accJson.getString("name");
+            String password = accJson.getString("password");
+            Account acc = new Account(name, password);
+            po.addAccount(name, acc);
+        }
+        // needed to add all accounts first, then add conversations
+        for (Object account : accounts) {
+            JSONObject accJson = jsonObj.getJSONObject((String) account);
+            Account acc = po.getAccount(accJson.getString("name"));
+            addConversations(po, acc, accJson);
+        }
     }
 
     // MODIFIES: acc
     // EFFECTS: Parses conversations from JSON object and adds them to PostOffice
-    private void addConversations(Account acc, JSONObject jsonObj) {
-
+    private void addConversations(PostOffice po, Account acc, JSONObject jsonObj) {
+        JSONObject conversations = jsonObj.getJSONObject("conversations");
+        JSONArray names = conversations.names();
+        for (Object name : names) {
+            String nextName = (String) name;
+            JSONArray convoJson = conversations.getJSONArray(nextName);
+            Account otherAcc = po.getAccount(nextName);
+            acc.beginConversation(otherAcc);
+            addMessages(acc, otherAcc, convoJson);
+        }
     }
 
-    // MODIFIES: convo
-    // EFFECTS: Parses messages from JSON object and adds them to PostOffice
-    private void addMessages(Conversation convo, JSONObject jsonObj) {
-
+    // MODIFIES: acc, otherAcc
+    // EFFECTS: Parses messages from JSON array and adds them to PostOffice
+    private void addMessages(Account acc, Account otherAcc, JSONArray messages) {
+        for (Object message : messages) {
+            JSONObject nextMessage = (JSONObject) message;
+            String sender = nextMessage.getString("sender");
+            String value = nextMessage.getString("value");
+            if (sender.equals(acc.getName())) {
+                acc.sendMessage(otherAcc, new Message(acc, value));
+            } else {
+                otherAcc.sendMessage(acc, new Message(otherAcc, value));
+            }
+        }
     }
 }
