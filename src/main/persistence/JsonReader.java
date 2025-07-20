@@ -13,7 +13,7 @@ import model.PostOffice;
 public class JsonReader {
 
     // EFFECTS: Creates a reader to read from source file
-    public JsonReader() {
+    public JsonReader(String source) {
         
     }
 
