@@ -32,12 +32,12 @@ public class PostOffice {
 
     // EFFECTS: Returns this as a JSON object
     public JSONObject toJson() {
-        return null;
-    }
-
-    // EFFECTS: Returns accounts in this PostOffice as a JSONObject
-    private JSONObject accountsToJson() {
-        return null;
+        JSONObject json = new JSONObject();
+        Set<String> accNames = accounts.keySet();
+        for (String accName : accNames) {
+            json.put(accName, accounts.get(accName).toJson());
+        }
+        return json;
     }
 
     public Map<String, Account> getAccounts() {
