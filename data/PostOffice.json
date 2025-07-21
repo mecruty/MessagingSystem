@@ -1,0 +1,29 @@
+{
+    "bob": {
+        "password": "2345",
+        "name": "bob",
+        "conversations": {}
+    },
+    "alice": {
+        "password": "1234",
+        "name": "alice",
+        "conversations": {"bob": [
+            {
+                "sender": "alice",
+                "value": "hi"
+            },
+            {
+                "sender": "bob",
+                "value": "hello"
+            },
+            {
+                "sender": "bob",
+                "value": "How are you?"
+            },
+            {
+                "sender": "alice",
+                "value": "good"
+            }
+        ]}
+    }
+}

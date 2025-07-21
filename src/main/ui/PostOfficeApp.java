@@ -1,5 +1,6 @@
 package ui;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -7,12 +8,17 @@ import model.Account;
 import model.Conversation;
 import model.Message;
 import model.PostOffice;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 // An app for running post office
 public class PostOfficeApp {
 
+    private static final String JSON_LOCATION = "./data/PostOffice.json";
     private Scanner sc;
     private PostOffice po;
+    private JsonReader reader = new JsonReader(JSON_LOCATION);
+    private JsonWriter writer = new JsonWriter(JSON_LOCATION);
 
     // EFFECTS: Runs the post office app.
     public PostOfficeApp() {
@@ -23,10 +29,28 @@ public class PostOfficeApp {
     // EFFECTS: Processes user input
     private void runPostOfficeApp() {
         sc = new Scanner(System.in);
-        po = new PostOffice();
-        boolean quit = false;
-        String next;
+        System.out.println("\nWould you like to load your past accounts and conversations? (y/n)");
+        String next = sc.nextLine();
+        if (next.equalsIgnoreCase("y") || next.equalsIgnoreCase("yes")) {
+            loadPostOffice();
+        } else {
+            po = new PostOffice();
+        }
 
+        mainLoop(next);
+
+        System.out.println("\nWould you like to save the messages in the post office. (y/n)");
+        next = sc.nextLine();
+        if (next.equalsIgnoreCase("y") || next.equalsIgnoreCase("yes")) {
+            savePostOffice();
+        }
+        System.out.println("Bye!");
+    }
+
+    // MODIFIES: this
+    // EFFECT: Runs the main loop for logging into accounts
+    private void mainLoop(String next) {
+        boolean quit = false;
         while (!quit) {
             System.out.println("\nWelcome to the post office, to quit type \"quit\"");
             System.out.println("To login/create an account, enter a name:");
@@ -39,8 +63,6 @@ public class PostOfficeApp {
                 login(name, sc.nextLine());
             }
         }
-
-        System.out.println("Bye!");
     }
 
     // MODIFIES: this
@@ -197,13 +219,25 @@ public class PostOfficeApp {
 
     // EFFECTS: Saves the PostOffice to file
     private void savePostOffice() {
-
+        try {
+            writer.openWriter();
+            writer.writeToFile(po);
+            writer.closeWriter();
+            System.out.println("\nPost office successfuly saved");
+        } catch (IOException e) {
+            System.out.println("\nFile saving to " + JSON_LOCATION + " has failed");
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: Loads PostOffice from file
     private void loadPostOffice() {
-
+        try {
+            po = reader.read();
+            System.out.println("\nPost office successfully loaded");
+        } catch (IOException e) {
+            System.out.println("\nFile loading from " + JSON_LOCATION + " has failed");
+        }
     }
 
     // EFFECT: Logs out of account
