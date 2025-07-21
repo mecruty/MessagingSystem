@@ -3,7 +3,6 @@ package model;
 import java.util.*;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 // Represents a conversation having a list of messages
 public class Conversation {
@@ -42,13 +41,12 @@ public class Conversation {
     }
 
     // EFFECTS: Returns this as a JSON object
-    public JSONObject toJson() {
-        return null;
-    }
-
-    // EFFECTS: Returns conversations in this Account as a JSONArray
-    private JSONArray messagesToJson() {
-        return null;
+    public JSONArray toJson() {
+        JSONArray json = new JSONArray();
+        for (Message m : messages) {
+            json.put(m.toJson());
+        }
+        return json;
     }
 
     public List<Message> getMessages() {
