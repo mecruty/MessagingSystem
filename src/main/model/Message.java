@@ -16,7 +16,10 @@ public class Message {
 
     // EFFECTS: Returns this as a JSON object
     public JSONObject toJson() {
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("sender", sender.getName());
+        json.put("value", value);
+        return json;
     }
 
     public String getValue() {

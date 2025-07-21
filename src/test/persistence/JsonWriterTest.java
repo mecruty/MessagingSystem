@@ -49,13 +49,13 @@ public class JsonWriterTest extends JsonTest {
     @Test
     public void testWriterGeneralPostOffice() {
         po = buildPostOffice();
-        writerTest = new JsonWriter("./data/testWriterGenearlPostOffice.json");
+        writerTest = new JsonWriter("./data/testWriterGeneralPostOffice.json");
         try {
             writerTest.openWriter();
             writerTest.writeToFile(po);
             writerTest.closeWriter();
 
-            readerTest = new JsonReader("./data/testWriterGenearlPostOffice.json");
+            readerTest = new JsonReader("./data/testWriterGeneralPostOffice.json");
             po = readerTest.read();
             assertEquals(po, buildPostOffice());
         } catch (IOException e) {

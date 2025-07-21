@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Set;
 import java.util.stream.Stream;
+
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -53,17 +55,17 @@ public class JsonReader {
     // MODIFIES: po
     // EFFECTS: Parses accounts from JSON object and adds them to PostOffice
     private void addAccounts(PostOffice po, JSONObject jsonObj) {
-        JSONArray accounts = jsonObj.names();
-        for (Object account : accounts) {
-            JSONObject accJson = jsonObj.getJSONObject((String) account);
+        Set<String> accNames = jsonObj.keySet();
+        for (String accName : accNames) {
+            JSONObject accJson = jsonObj.getJSONObject(accName);
             String name = accJson.getString("name");
             String password = accJson.getString("password");
             Account acc = new Account(name, password);
             po.addAccount(name, acc);
         }
         // needed to add all accounts first, then add conversations
-        for (Object account : accounts) {
-            JSONObject accJson = jsonObj.getJSONObject((String) account);
+        for (String accName : accNames) {
+            JSONObject accJson = jsonObj.getJSONObject(accName);
             Account acc = po.getAccount(accJson.getString("name"));
             addConversations(po, acc, accJson);
         }
@@ -73,11 +75,10 @@ public class JsonReader {
     // EFFECTS: Parses conversations from JSON object and adds them to PostOffice
     private void addConversations(PostOffice po, Account acc, JSONObject jsonObj) {
         JSONObject conversations = jsonObj.getJSONObject("conversations");
-        JSONArray names = conversations.names();
-        for (Object name : names) {
-            String nextName = (String) name;
-            JSONArray convoJson = conversations.getJSONArray(nextName);
-            Account otherAcc = po.getAccount(nextName);
+        Set<String> convoNames = conversations.keySet();
+        for (String convoName : convoNames) {
+            JSONArray convoJson = conversations.getJSONArray(convoName);
+            Account otherAcc = po.getAccount(convoName);
             acc.beginConversation(otherAcc);
             addMessages(acc, otherAcc, convoJson);
         }
