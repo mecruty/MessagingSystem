@@ -65,12 +65,25 @@ public class Account {
 
     // EFFECTS: Returns this as a JSON object
     public JSONObject toJson() {
-        return null;
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("password", password);
+        json.put("conversations", conversationsToJson());
+        return json;
     }
 
     // EFFECTS: Returns conversations in this Account as a JSONObject
     private JSONObject conversationsToJson() {
-        return null;
+        JSONObject json = new JSONObject();
+        Set<Account> convos = conversations.keySet();
+        for (Account otherAcc : convos) {
+            String otherAccName = otherAcc.getName();
+            // To reduce storing conversations twice
+            if (otherAccName.compareTo(name) == 1) {
+                json.put(otherAccName, conversations.get(otherAcc).toJson());
+            }
+        }
+        return json;
     }
 
     public String getName() {
