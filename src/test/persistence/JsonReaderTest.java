@@ -3,19 +3,26 @@ package persistence;
 import model.PostOffice;
 
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 
 public class JsonReaderTest extends JsonTest {
+    PostOffice po;
     JsonReader readerTest;
+
+    @BeforeEach
+    public void runBefore() {
+        po = new PostOffice();
+    }
 
     @Test
     public void testReaderInvalidFile() {
         readerTest = new JsonReader("./data/invalidFile.json");
         try {
-            PostOffice po = readerTest.read();
+            po = readerTest.read();
             fail("IOExcepion expected");
         } catch (IOException e) {
             // pass
@@ -26,7 +33,7 @@ public class JsonReaderTest extends JsonTest {
     public void testReaderEmptyPostOfice() {
         readerTest = new JsonReader("./data/testReaderEmptyPostOffice.json");
         try {
-            PostOffice po = readerTest.read();
+            po = readerTest.read();
             assertTrue(po.getAccounts().isEmpty());
         } catch (IOException e) {
             fail("IOException thrown");
@@ -34,10 +41,11 @@ public class JsonReaderTest extends JsonTest {
     }
 
     @Test
-    public void testGeneralPostOfice() {
+    public void testReaderGeneralPostOfice() {
+
         readerTest = new JsonReader("./data/testReaderGeneralPostOffice.json");
         try {
-            PostOffice po = readerTest.read();
+            po = readerTest.read();
             assertEquals(po, buildPostOffice());
         } catch (IOException e) {
             fail("IOException thrown");
