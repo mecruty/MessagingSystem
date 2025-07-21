@@ -48,16 +48,17 @@ public class JsonWriterTest extends JsonTest {
 
     @Test
     public void testWriterGeneralPostOffice() {
-        po = buildPostOffice();
         writerTest = new JsonWriter("./data/testWriterGeneralPostOffice.json");
         try {
+            po = buildPostOffice();
             writerTest.openWriter();
             writerTest.writeToFile(po);
             writerTest.closeWriter();
 
             readerTest = new JsonReader("./data/testWriterGeneralPostOffice.json");
             po = readerTest.read();
-            assertEquals(po, buildPostOffice());
+
+            testPostOffice(po);
         } catch (IOException e) {
             fail("IOException thrown");
         }

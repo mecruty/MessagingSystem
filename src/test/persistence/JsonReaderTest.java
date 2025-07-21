@@ -42,11 +42,10 @@ public class JsonReaderTest extends JsonTest {
 
     @Test
     public void testReaderGeneralPostOfice() {
-
         readerTest = new JsonReader("./data/testReaderGeneralPostOffice.json");
         try {
             po = readerTest.read();
-            assertEquals(po, buildPostOffice());
+            testPostOffice(po);
         } catch (IOException e) {
             fail("IOException thrown");
         }
