@@ -12,7 +12,7 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 // An app for running post office
-public class PostOfficeApp {
+public class PostOfficeConsoleApp {
 
     private static final String JSON_LOCATION = "./data/PostOffice.json";
     private Scanner sc;
@@ -21,7 +21,7 @@ public class PostOfficeApp {
     private JsonWriter writer = new JsonWriter(JSON_LOCATION);
 
     // EFFECTS: Runs the post office app.
-    public PostOfficeApp() {
+    public PostOfficeConsoleApp() {
         runPostOfficeApp();
     }
 
