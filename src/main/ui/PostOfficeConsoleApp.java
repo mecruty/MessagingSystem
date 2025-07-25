@@ -17,8 +17,8 @@ public class PostOfficeConsoleApp {
     private static final String JSON_LOCATION = "./data/PostOffice.json";
     private Scanner sc;
     private PostOffice po;
-    private JsonReader reader = new JsonReader(JSON_LOCATION);
-    private JsonWriter writer = new JsonWriter(JSON_LOCATION);
+    private JsonReader reader;
+    private JsonWriter writer;
 
     // EFFECTS: Runs the post office app.
     public PostOfficeConsoleApp() {
@@ -29,6 +29,8 @@ public class PostOfficeConsoleApp {
     // EFFECTS: Processes user input
     private void runPostOfficeApp() {
         sc = new Scanner(System.in);
+        reader = new JsonReader(JSON_LOCATION);
+        writer = new JsonWriter(JSON_LOCATION);
         System.out.println("\nWould you like to load your past accounts and conversations? (y/n)");
         String next = sc.nextLine();
         if (next.equalsIgnoreCase("y") || next.equalsIgnoreCase("yes")) {
