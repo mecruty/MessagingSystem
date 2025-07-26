@@ -37,12 +37,13 @@ public class PostOfficeAppUI extends PostOfficeUI {
     // EFFECTS: Creates a UI for the Post Office App
     public PostOfficeAppUI() {
         super("Digital Post Office");
+        initializeGraphics();
+        initializeFields();
     }
 
     // MODIFIES: this
     // EFFECTS: TODO
-    @Override
-    protected void initializeFields() {
+    private void initializeFields() {
         reader = new JsonReader(JSON_LOCATION);
         writer = new JsonWriter(JSON_LOCATION);
         String question = "Would you like to load your past accounts and conversations?";
@@ -97,7 +98,7 @@ public class PostOfficeAppUI extends PostOfficeUI {
     }
 
     // MODIFIES: this
-    // EFFECTS: Creates the login panel with fields for name and password
+    // EFFECTS: Creates the quit panel at bottom with button
     private void addQuitPanel() {
         quitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         quitPanel.setBorder(new EmptyBorder(0, 10, 0, 0));
@@ -118,7 +119,7 @@ public class PostOfficeAppUI extends PostOfficeUI {
         if (po.contains(name)) {
             Account acc = po.getAccount(name);
             if (acc.checkLoginDetails(name, password)) {
-                // enterAccount(name);
+                enterAccount(acc);
             } else {
                 loginPanel.setStatus("Wrong password, please try again");
                 loginPanel.reset();
@@ -136,8 +137,14 @@ public class PostOfficeAppUI extends PostOfficeUI {
         }
     }
 
-    // EFFECTS: Creates a pop up that asks if the current post office should be
-    // saved
+    // MODIFIES: this
+    // EFFECTS: Changes UI to enter account, disposing this
+    private void enterAccount(Account acc) {
+        dispose();
+        new AccountUI(acc, po);
+    }
+
+    // EFFECTS: Creates a pop up that asks if the current post office should be saved
     public void askSavePostOffice() {
         String question = "Would you like to save the messages in the post office?";
         int answer = JOptionPane.showConfirmDialog(

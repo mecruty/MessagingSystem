@@ -17,8 +17,6 @@ public abstract class PostOfficeUI extends JFrame {
     // EFFECTS: Creates a JFrame for post office with a title
     public PostOfficeUI(String title) {
         super(title);
-        initializeGraphics();
-        initializeFields();
     }
     
     // EFFECTS: Initializes graphics
@@ -39,7 +37,4 @@ public abstract class PostOfficeUI extends JFrame {
 
     // EFFECTS: Adds major elements to the JFrame
     protected abstract void addElements();
-
-    // EFFECTS: Initializes fields
-    protected abstract void initializeFields();
 }
