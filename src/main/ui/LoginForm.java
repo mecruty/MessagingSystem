@@ -8,7 +8,7 @@ import javax.swing.border.EmptyBorder;
 // TODO
 public class LoginForm extends JPanel {
 
-    private PostOfficeUI parent;
+    private PostOfficeAppUI parent;
 
     private JLabel askForName;
     private JLabel askForPassword;
@@ -18,7 +18,7 @@ public class LoginForm extends JPanel {
     private JLabel status;
 
     // EFFECTS: Creates the login form with inputs for name and password
-    public LoginForm(PostOfficeUI parent) {
+    public LoginForm(PostOfficeAppUI parent) {
         super();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.parent = parent;

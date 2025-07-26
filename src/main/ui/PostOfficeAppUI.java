@@ -19,7 +19,7 @@ import persistence.JsonWriter;
 // stackoverflow.com/questions/14625091/create-a-list-of-entries-and-make-each-entry-clickable (JList)
 
 // TODO add class documentation
-public class PostOfficeUI extends JFrame {
+public class PostOfficeAppUI extends JFrame {
 
     public static final int WIDTH = 800;
     public static final int HEIGHT = 600;
@@ -40,7 +40,7 @@ public class PostOfficeUI extends JFrame {
     private JButton quitButton;
 
     // EFFECTS: Creates PostOffice UI
-    public PostOfficeUI() {
+    public PostOfficeAppUI() {
         super("Digital Post Office");
         initializeGraphics();
         initializeFields();
