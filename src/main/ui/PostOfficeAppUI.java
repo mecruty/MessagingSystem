@@ -4,8 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
 
 import model.Account;
@@ -19,14 +18,10 @@ import persistence.JsonWriter;
 // stackoverflow.com/questions/14625091/create-a-list-of-entries-and-make-each-entry-clickable (JList)
 
 // TODO add class documentation
-public class PostOfficeAppUI extends JFrame {
-
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 600;
-
+public class PostOfficeAppUI extends PostOfficeUI {
+    
     private static final String JSON_LOCATION = "./data/PostOffice.json";
 
-    private PostOffice po;
     private JsonReader reader;
     private JsonWriter writer;
 
@@ -39,16 +34,15 @@ public class PostOfficeAppUI extends JFrame {
     private JPanel quitPanel;
     private JButton quitButton;
 
-    // EFFECTS: Creates PostOffice UI
+    // EFFECTS: Creates a UI for the Post Office App
     public PostOfficeAppUI() {
         super("Digital Post Office");
-        initializeGraphics();
-        initializeFields();
     }
 
     // MODIFIES: this
     // EFFECTS: TODO
-    private void initializeFields() {
+    @Override
+    protected void initializeFields() {
         reader = new JsonReader(JSON_LOCATION);
         writer = new JsonWriter(JSON_LOCATION);
         String question = "Would you like to load your past accounts and conversations?";
@@ -63,12 +57,8 @@ public class PostOfficeAppUI extends JFrame {
 
     // MODIFIES: this
     // EFFECTS: TODO
-    private void initializeGraphics() {
-        setLayout(new BorderLayout());
-        setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        setResizable(false); // TODO
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+    @Override
+    protected void addElements() {
         // TODO
         addTitlePanel();
         addLoginPanel();
