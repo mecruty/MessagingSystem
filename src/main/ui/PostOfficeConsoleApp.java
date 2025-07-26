@@ -41,7 +41,7 @@ public class PostOfficeConsoleApp {
 
         mainLoop(next);
 
-        System.out.println("\nWould you like to save the messages in the post office. (y/n)");
+        System.out.println("\nWould you like to save the messages in the post office? (y/n)");
         next = sc.nextLine();
         if (next.equalsIgnoreCase("y") || next.equalsIgnoreCase("yes")) {
             savePostOffice();

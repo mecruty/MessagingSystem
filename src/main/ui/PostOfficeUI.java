@@ -1,9 +1,12 @@
 package ui;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import model.PostOffice;
@@ -12,7 +15,7 @@ import persistence.JsonWriter;
 
 // Modelled after:
 // github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Starter (General)
-// docs.oracle.com/javase/tutorial/uiswing/layout/card.html (Layout Card)
+// docs.oracle.com/javase/tutorial/uiswing/layout/card.html (Layout Cards)
 // stackoverflow.com/questions/14625091/create-a-list-of-entries-and-make-each-entry-clickable (JList)
 
 // TODO add class documentation
@@ -31,6 +34,9 @@ public class PostOfficeUI extends JFrame {
     private JLabel welcomeLabel;
     private JLabel loginLabel;
 
+    private JPanel quitPanel;
+    private JButton quitButton;
+
     // EFFECTS: Creates PostOffice UI
     public PostOfficeUI() {
         super("Digital Post Office");
@@ -45,7 +51,7 @@ public class PostOfficeUI extends JFrame {
         writer = new JsonWriter(JSON_LOCATION);
         String question = "Would you like to load your past accounts and conversations?";
         int answer = JOptionPane.showConfirmDialog(
-                this, question, "Message Loader", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                this, question, "Post Office Loader", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (answer == JOptionPane.YES_OPTION) {
             loadPostOffice();
         } else {
@@ -58,19 +64,19 @@ public class PostOfficeUI extends JFrame {
     private void initializeGraphics() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        setResizable(false);
+        setResizable(false); //TODO
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         // TODO
         addTitlePanel();
-
+        addQuitPanel();
         // TODO
         setVisible(true);
     }
 
     // MODIFIES: this
     // EFFECTS: Creates title panel at top with messages
-    public void addTitlePanel() {
+    private void addTitlePanel() {
         welcomeLabel = new JLabel("Welcome to the post office!", JLabel.CENTER);
         welcomeLabel.setBorder(new EmptyBorder(20,0,0,0));
         welcomeLabel.setFont(new Font(Font.SERIF, Font.BOLD, 50));
@@ -85,6 +91,39 @@ public class PostOfficeUI extends JFrame {
         titlePanel.add(loginLabel);
 
         add(titlePanel, BorderLayout.NORTH);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Creates the login panel with fields for name and password
+    private void addLoginPanel() {
+        
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Creates the login panel with fields for name and password
+    private void addQuitPanel() {
+        quitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        quitPanel.setBorder(new EmptyBorder(0,10,0,0));
+        quitButton = new JButton("Quit");
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                askSavePostOffice();
+            }
+        });
+        quitPanel.add(quitButton);
+        add(quitPanel, BorderLayout.SOUTH);
+    }
+
+    // EFFECTS: Creates a pop up that asks if the current post office should be saved
+    public void askSavePostOffice() {
+        String question = "Would you like to save the messages in the post office?";
+        int answer = JOptionPane.showConfirmDialog(
+                this, question, "Post Office Saver", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (answer == JOptionPane.YES_OPTION) {
+            savePostOffice();
+        }
+        System.exit(0);
     }
 
     // EFFECTS: Saves the PostOffice to file
