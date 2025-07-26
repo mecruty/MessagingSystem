@@ -1,7 +1,6 @@
 package ui;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
@@ -9,13 +8,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import model.Account;
 import model.PostOffice;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 // Modelled after:
 // github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Starter (General)
-// docs.oracle.com/javase/tutorial/uiswing/layout/card.html (Layout Cards)
+// docs.oracle.com/javase/tutorial/uiswing/layout (Layouts)
 // stackoverflow.com/questions/14625091/create-a-list-of-entries-and-make-each-entry-clickable (JList)
 
 // TODO add class documentation
@@ -33,6 +33,8 @@ public class PostOfficeUI extends JFrame {
     private JPanel titlePanel;
     private JLabel welcomeLabel;
     private JLabel loginLabel;
+
+    private LoginForm loginPanel;
 
     private JPanel quitPanel;
     private JButton quitButton;
@@ -64,11 +66,12 @@ public class PostOfficeUI extends JFrame {
     private void initializeGraphics() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        setResizable(false); //TODO
+        setResizable(false); // TODO
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         // TODO
         addTitlePanel();
+        addLoginPanel();
         addQuitPanel();
         // TODO
         setVisible(true);
@@ -78,11 +81,11 @@ public class PostOfficeUI extends JFrame {
     // EFFECTS: Creates title panel at top with messages
     private void addTitlePanel() {
         welcomeLabel = new JLabel("Welcome to the post office!", JLabel.CENTER);
-        welcomeLabel.setBorder(new EmptyBorder(20,0,0,0));
+        welcomeLabel.setBorder(new EmptyBorder(20, 0, 0, 0));
         welcomeLabel.setFont(new Font(Font.SERIF, Font.BOLD, 50));
 
         loginLabel = new JLabel("Please login or create an account.", JLabel.CENTER);
-        loginLabel.setBorder(new EmptyBorder(-20,0,0,0));
+        loginLabel.setBorder(new EmptyBorder(-20, 0, 0, 0));
         loginLabel.setFont(new Font(Font.SERIF, Font.PLAIN, 30));
 
         titlePanel = new JPanel();
@@ -96,14 +99,18 @@ public class PostOfficeUI extends JFrame {
     // MODIFIES: this
     // EFFECTS: Creates the login panel with fields for name and password
     private void addLoginPanel() {
-        
+        loginPanel = new LoginForm(this);
+        // Creating a temp panel to put flowlayout in boxlayout
+        JPanel wrapper = new JPanel();
+        wrapper.add(loginPanel);
+        add(wrapper, BorderLayout.CENTER);
     }
 
     // MODIFIES: this
     // EFFECTS: Creates the login panel with fields for name and password
     private void addQuitPanel() {
         quitPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        quitPanel.setBorder(new EmptyBorder(0,10,0,0));
+        quitPanel.setBorder(new EmptyBorder(0, 10, 0, 0));
         quitButton = new JButton("Quit");
         quitButton.addActionListener(new ActionListener() {
             @Override
@@ -115,7 +122,32 @@ public class PostOfficeUI extends JFrame {
         add(quitPanel, BorderLayout.SOUTH);
     }
 
-    // EFFECTS: Creates a pop up that asks if the current post office should be saved
+    // MODIFIES: TODO
+    // EFFECTS: Processes user input for logging into an account
+    public void login(String name, String password) {
+        if (po.contains(name)) {
+            Account acc = po.getAccount(name);
+            if (acc.checkLoginDetails(name, password)) {
+                // enterAccount(name);
+            } else {
+                loginPanel.setStatus("Wrong password, please try again");
+                loginPanel.reset();
+            }
+        } else {
+            String question = "That account does not exist, would you like to create it as a new account?";
+            int answer = JOptionPane.showConfirmDialog(
+                    this, question, "Account Creator", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (answer == JOptionPane.YES_OPTION) {
+                po.addAccount(name, new Account(name, password));
+            } else {
+                loginPanel.setStatus("Try again");
+                loginPanel.reset();
+            }
+        }
+    }
+
+    // EFFECTS: Creates a pop up that asks if the current post office should be
+    // saved
     public void askSavePostOffice() {
         String question = "Would you like to save the messages in the post office?";
         int answer = JOptionPane.showConfirmDialog(
@@ -132,9 +164,9 @@ public class PostOfficeUI extends JFrame {
             writer.openWriter();
             writer.writeToFile(po);
             writer.closeWriter();
-            //System.out.println("\nPost office successfuly saved"); TODO
+            // System.out.println("\nPost office successfuly saved"); TODO
         } catch (IOException e) {
-            //System.out.println("\nFile saving to " + JSON_LOCATION + " has failed"); TODO
+            // System.out.println("\nFile saving to " + JSON_LOCATION + " has failed"); TODO
         }
     }
 
@@ -143,9 +175,10 @@ public class PostOfficeUI extends JFrame {
     private void loadPostOffice() {
         try {
             po = reader.read();
-            //System.out.println("\nPost office successfully loaded"); TODO
+            // System.out.println("\nPost office successfully loaded"); TODO
         } catch (IOException e) {
-            //System.out.println("\nFile loading from " + JSON_LOCATION + " has failed"); TODO
+            // System.out.println("\nFile loading from " + JSON_LOCATION + " has failed");
+            // TODO
         }
     }
 
