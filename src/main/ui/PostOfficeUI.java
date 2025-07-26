@@ -1,6 +1,8 @@
 package ui;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+
 import java.awt.*;
 import java.io.IOException;
 
@@ -24,6 +26,10 @@ public class PostOfficeUI extends JFrame {
     private PostOffice po;
     private JsonReader reader;
     private JsonWriter writer;
+
+    private JPanel titlePanel;
+    private JLabel welcomeLabel;
+    private JLabel loginLabel;
 
     // EFFECTS: Creates PostOffice UI
     public PostOfficeUI() {
@@ -56,7 +62,29 @@ public class PostOfficeUI extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         // TODO
+        addTitlePanel();
+
+        // TODO
         setVisible(true);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Creates title panel at top with messages
+    public void addTitlePanel() {
+        welcomeLabel = new JLabel("Welcome to the post office!", JLabel.CENTER);
+        welcomeLabel.setBorder(new EmptyBorder(20,0,0,0));
+        welcomeLabel.setFont(new Font(Font.SERIF, Font.BOLD, 50));
+
+        loginLabel = new JLabel("Please login or create an account.", JLabel.CENTER);
+        loginLabel.setBorder(new EmptyBorder(-20,0,0,0));
+        loginLabel.setFont(new Font(Font.SERIF, Font.PLAIN, 30));
+
+        titlePanel = new JPanel();
+        titlePanel.setLayout(new GridLayout(0, 1));
+        titlePanel.add(welcomeLabel);
+        titlePanel.add(loginLabel);
+
+        add(titlePanel, BorderLayout.NORTH);
     }
 
     // EFFECTS: Saves the PostOffice to file
@@ -65,9 +93,9 @@ public class PostOfficeUI extends JFrame {
             writer.openWriter();
             writer.writeToFile(po);
             writer.closeWriter();
-            //System.out.println("\nPost office successfuly saved");
+            //System.out.println("\nPost office successfuly saved"); TODO
         } catch (IOException e) {
-            //System.out.println("\nFile saving to " + JSON_LOCATION + " has failed");
+            //System.out.println("\nFile saving to " + JSON_LOCATION + " has failed"); TODO
         }
     }
 
@@ -76,9 +104,9 @@ public class PostOfficeUI extends JFrame {
     private void loadPostOffice() {
         try {
             po = reader.read();
-            //System.out.println("\nPost office successfully loaded");
+            //System.out.println("\nPost office successfully loaded"); TODO
         } catch (IOException e) {
-            //System.out.println("\nFile loading from " + JSON_LOCATION + " has failed");
+            //System.out.println("\nFile loading from " + JSON_LOCATION + " has failed"); TODO
         }
     }
 
