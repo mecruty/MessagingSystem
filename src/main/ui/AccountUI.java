@@ -20,20 +20,24 @@ import model.PostOffice;
 // TODO class documentation
 public class AccountUI extends PostOfficeUI {
 
-    Account acc;
+    private Account acc;
 
-    JPanel namePanel;
-    JLabel name;
+    private JPanel namePanel;
+    private JLabel name;
 
-    JPanel accountPanel;
-    JList<String> accounts;
+    private JPanel accountPanel;
+    private JList<String> accounts;
 
-    JPanel conversationPanel;
-    JTextArea conversation;
-    JTextField textBox;
+    private JPanel conversationPanel;
+    private JTextArea conversation;
+    private JTextField textBox;
 
-    JPanel logoutPanel;
-    JButton logout;
+    private JPanel featurePanel;
+    private JButton delete;
+    private JButton sort;
+
+    private JPanel logoutPanel;
+    private JButton logout;
 
     // EFFECTS: TODO
     public AccountUI(Account acc, PostOffice po) {
@@ -136,16 +140,19 @@ public class AccountUI extends PostOfficeUI {
         textBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (accounts.getSelectedValue() != null) {
+                if (accounts.getSelectedValue() != null && !textBox.getText().isBlank()) {
                     Message m = new Message(acc, textBox.getText());
-                    acc.sendMessage(po.getAccount(accounts.getSelectedValue()), null);
+                    Account otherAcc = po.getAccount(accounts.getSelectedValue());
+                    acc.sendMessage(otherAcc, m);
+                    loadAccountMessages();
+                    textBox.setText("");
                 }
             }
         });
     }
 
     // MODIFIES: this
-    // EFFECTS: Selects account by processing user input
+    // EFFECTS: Loads all messages in the selected conversation
     private void loadAccountMessages() {
         String selectedAcc = accounts.getSelectedValue();
         Account otherAcc = po.getAccount(selectedAcc);
