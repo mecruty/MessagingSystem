@@ -49,7 +49,7 @@ public class LoginForm extends JPanel {
         add(submitLogin);
         add(status);
     }
-
+    
     // EFFECTS: Adds an action listener for the submit button
     private ActionListener addSubmitActionListener() {
         return new ActionListener() {

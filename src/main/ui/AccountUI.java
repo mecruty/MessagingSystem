@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
@@ -21,6 +22,7 @@ import model.PostOffice;
 public class AccountUI extends PostOfficeUI {
 
     private Account acc;
+    private boolean sortByNewest;
 
     private JPanel namePanel;
     private JLabel name;
@@ -44,6 +46,7 @@ public class AccountUI extends PostOfficeUI {
         super("Digital Post Office");
         this.acc = acc;
         this.po = po;
+        sortByNewest = true;
         initializeGraphics();
     }
 
@@ -53,6 +56,7 @@ public class AccountUI extends PostOfficeUI {
     protected void addElements() {
         addNamePanel();
         addCenterPanels();
+        addFeaturePanel();
         addLogoutPanel();
 
         setVisible(true);
@@ -127,7 +131,7 @@ public class AccountUI extends PostOfficeUI {
     private void initializeConversation() {
         conversation = new JTextArea();
         // TODO
-        //conversation.setColumns(35);
+        // conversation.setColumns(35);
         conversation.setRows(40);
         conversation.setEditable(false);
         conversation.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
@@ -159,12 +163,64 @@ public class AccountUI extends PostOfficeUI {
         int numMessages = acc.getConversations().get(otherAcc).getMessages().size();
         List<Message> messages = acc.readConversation(otherAcc, 100, numMessages - 1);
         String text = "";
-        for (int i = messages.size() - 1; i >= 0; i--) {
-            String sender = messages.get(i).getSender().getName();
-            String value = messages.get(i).getValue();
-            text += sender + ": " + value + "\n";
+        if (sortByNewest) {
+            for (int i = messages.size() - 1; i >= 0; i--) {
+                String sender = messages.get(i).getSender().getName();
+                String value = messages.get(i).getValue();
+                text += sender + ": " + value + "\n";
+            }
+        } else {
+            for (int i = 0; i < messages.size(); i++) {
+                String sender = messages.get(i).getSender().getName();
+                String value = messages.get(i).getValue();
+                text += sender + ": " + value + "\n";
+            }
         }
         conversation.setText(text);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Creates a panel with a delete and sort button
+    private void addFeaturePanel() {
+        featurePanel = new JPanel();
+        delete = new JButton("Delete");
+        sort = new JButton("Sort: Newest");
+
+        delete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (accounts.getSelectedValue() != null) {
+                    Account otherAcc = po.getAccount(accounts.getSelectedValue());
+                    acc.deleteMessage(otherAcc);
+                    loadAccountMessages();
+                }
+            }
+        });
+
+        sort.addActionListener(addSubmitActionListener());
+
+        featurePanel.add(delete);
+        featurePanel.add(sort);
+        add(featurePanel, BorderLayout.EAST);
+    }
+
+    // EFFECTS: Adds an action listener for the sort button, swapping between sorting oldest and newest
+    private ActionListener addSubmitActionListener() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (accounts.getSelectedValue() != null) {
+                    if (sort.getText().equals("Sort: Newest")) {
+                        sort.setText("Sort: Oldest");
+                        sortByNewest = false;
+                    } else {
+                        sort.setText("Sort: Newest");
+                        sortByNewest = true;
+                    }
+                    loadAccountMessages();
+                }
+            }
+        };
     }
 
     // MODIFIES: this
