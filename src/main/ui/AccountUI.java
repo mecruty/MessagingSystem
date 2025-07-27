@@ -182,7 +182,10 @@ public class AccountUI extends PostOfficeUI {
     // MODIFIES: this
     // EFFECTS: Creates a panel with a delete and sort button
     private void addFeaturePanel() {
-        featurePanel = new JPanel();
+        JPanel wrapper = new JPanel();
+        wrapper.setBorder(new EmptyBorder(0, 0, 0, 20));
+
+        featurePanel = new JPanel(new GridLayout(0,1));
         delete = new JButton("Delete");
         sort = new JButton("Sort: Newest");
 
@@ -199,9 +202,10 @@ public class AccountUI extends PostOfficeUI {
 
         sort.addActionListener(addSubmitActionListener());
 
-        featurePanel.add(delete);
         featurePanel.add(sort);
-        add(featurePanel, BorderLayout.EAST);
+        featurePanel.add(delete);
+        wrapper.add(featurePanel);
+        add(wrapper, BorderLayout.EAST);
     }
 
     // EFFECTS: Adds an action listener for the sort button, swapping between sorting oldest and newest
