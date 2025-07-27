@@ -1,20 +1,35 @@
 package ui;
 
+import java.util.*;
+import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.event.*;
 
 import model.Account;
+import model.Message;
 import model.PostOffice;
 
+// Clickable list modelled after:
+// stackoverflow.com/questions/14625091/create-a-list-of-entries-and-make-each-entry-clickable
+// TODO class documentation
 public class AccountUI extends PostOfficeUI {
 
     Account acc;
 
     JPanel namePanel;
     JLabel name;
+
+    JPanel accountPanel;
+    JList<String> accounts;
+
+    JPanel conversationPanel;
+    JTextArea conversation;
 
     JPanel logoutPanel;
     JButton logout;
@@ -32,6 +47,7 @@ public class AccountUI extends PostOfficeUI {
     @Override
     protected void addElements() {
         addNamePanel();
+        addCenterPanels();
         addLogoutPanel();
 
         setVisible(true);
@@ -47,6 +63,74 @@ public class AccountUI extends PostOfficeUI {
 
         namePanel.add(name);
         add(namePanel, BorderLayout.NORTH);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Creates panel with accounts and corresponding text area
+    private void addCenterPanels() {
+        accountPanel = new JPanel(new GridLayout(0, 1));
+        accountPanel.setBorder(new CompoundBorder(new EmptyBorder(10, 50, 0, 0), new LineBorder(Color.RED)));
+        conversationPanel = new JPanel();
+        accounts = new JList<>();
+
+        initializeAccounts();
+
+        conversation = new JTextArea();
+        conversation.setColumns(50);
+        conversation.setRows(50);
+        conversation.setEditable(false);
+
+        accountPanel.add(accounts);
+        add(accountPanel, BorderLayout.WEST);
+
+        conversationPanel.add(conversation);
+        add(conversationPanel, BorderLayout.CENTER);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Sets values for list on left of UI
+    private void initializeAccounts() {
+        List<String> accsWithoutSelf = new ArrayList<>(Arrays.asList(po.getAccounts().keySet().toArray(new String[0])));
+        accsWithoutSelf.remove(acc.getName());
+
+        // Copied
+        accounts.setModel(new AbstractListModel<String>() {
+            String[] strings = accsWithoutSelf.toArray(new String[0]);
+
+            @Override
+            public int getSize() {
+                return strings.length;
+            }
+
+            @Override
+            public String getElementAt(int i) {
+                return strings[i];
+            }
+        });
+
+        accounts.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                loadAccountMessages();
+            }
+        });
+        accounts.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Selects account by processing user input
+    private void loadAccountMessages() {
+        String selectedAcc = accounts.getSelectedValue();
+        Account otherAcc = po.getAccount(selectedAcc);
+        int numMessages = acc.getConversations().get(otherAcc).getMessages().size();
+        List<Message> messages = acc.readConversation(otherAcc, 100, numMessages - 1);
+        String text = "";
+        for (int i = messages.size() - 1; i >= 0; i--) {
+            String sender = messages.get(i).getSender().getName();
+            String value = messages.get(i).getValue();
+            text += sender + ": " + value + "\n";
+        }
+        conversation.setText(text);
     }
 
     // MODIFIES: this

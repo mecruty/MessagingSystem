@@ -15,7 +15,6 @@ import persistence.JsonWriter;
 // Modelled after:
 // github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Starter (General)
 // docs.oracle.com/javase/tutorial/uiswing/layout (Layouts)
-// stackoverflow.com/questions/14625091/create-a-list-of-entries-and-make-each-entry-clickable (JList)
 
 // TODO add class documentation
 public class PostOfficeAppUI extends PostOfficeUI {
