@@ -30,6 +30,7 @@ public class AccountUI extends PostOfficeUI {
 
     JPanel conversationPanel;
     JTextArea conversation;
+    JTextField textBox;
 
     JPanel logoutPanel;
     JButton logout;
@@ -71,25 +72,25 @@ public class AccountUI extends PostOfficeUI {
         accountPanel = new JPanel(new GridLayout(0, 1));
         accountPanel.setBorder(new CompoundBorder(new EmptyBorder(10, 50, 0, 0), new LineBorder(Color.RED)));
         conversationPanel = new JPanel();
-        accounts = new JList<>();
+        conversationPanel.setLayout(new BoxLayout(conversationPanel, BoxLayout.Y_AXIS));
+        conversationPanel.setBorder(new CompoundBorder(new EmptyBorder(0, 30, 0, 30), new LineBorder(Color.ORANGE)));
 
         initializeAccounts();
-
-        conversation = new JTextArea();
-        conversation.setColumns(50);
-        conversation.setRows(50);
-        conversation.setEditable(false);
+        initializeConversation();
+        initializeTextBox();
 
         accountPanel.add(accounts);
         add(accountPanel, BorderLayout.WEST);
 
         conversationPanel.add(conversation);
+        conversationPanel.add(textBox);
         add(conversationPanel, BorderLayout.CENTER);
     }
 
     // MODIFIES: this
     // EFFECTS: Sets values for list on left of UI
     private void initializeAccounts() {
+        accounts = new JList<>();
         List<String> accsWithoutSelf = new ArrayList<>(Arrays.asList(po.getAccounts().keySet().toArray(new String[0])));
         accsWithoutSelf.remove(acc.getName());
 
@@ -114,7 +115,33 @@ public class AccountUI extends PostOfficeUI {
                 loadAccountMessages();
             }
         });
-        accounts.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
+        accounts.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Initalizes text area in center of UI
+    private void initializeConversation() {
+        conversation = new JTextArea();
+        // TODO
+        //conversation.setColumns(35);
+        conversation.setRows(40);
+        conversation.setEditable(false);
+        conversation.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Initalizes text field for typing new messages
+    private void initializeTextBox() {
+        textBox = new JTextField();
+        textBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (accounts.getSelectedValue() != null) {
+                    Message m = new Message(acc, textBox.getText());
+                    acc.sendMessage(po.getAccount(accounts.getSelectedValue()), null);
+                }
+            }
+        });
     }
 
     // MODIFIES: this

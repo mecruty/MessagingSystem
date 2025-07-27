@@ -30,7 +30,7 @@ public abstract class PostOfficeUI extends JFrame {
     private void initializeDefaultGraphics() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        setResizable(false); //TODO
+        //setResizable(false); //TODO
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
