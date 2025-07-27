@@ -19,8 +19,9 @@ import persistence.JsonWriter;
 
 // TODO add class documentation
 public class PostOfficeAppUI extends PostOfficeUI {
-    
+
     private static final String JSON_LOCATION = "./data/PostOffice.json";
+    private boolean showJsonPopUp;
 
     private JsonReader reader;
     private JsonWriter writer;
@@ -35,8 +36,10 @@ public class PostOfficeAppUI extends PostOfficeUI {
     private JButton quitButton;
 
     // EFFECTS: Creates a UI for the Post Office App
-    public PostOfficeAppUI() {
+    public PostOfficeAppUI(boolean showJsonPopUp, PostOffice po) {
         super("Digital Post Office");
+        this.showJsonPopUp = showJsonPopUp;
+        this.po = po;
         initializeGraphics();
         initializeFields();
     }
@@ -46,13 +49,13 @@ public class PostOfficeAppUI extends PostOfficeUI {
     private void initializeFields() {
         reader = new JsonReader(JSON_LOCATION);
         writer = new JsonWriter(JSON_LOCATION);
-        String question = "Would you like to load your past accounts and conversations?";
-        int answer = JOptionPane.showConfirmDialog(
-                this, question, "Post Office Loader", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-        if (answer == JOptionPane.YES_OPTION) {
-            loadPostOffice();
-        } else {
-            po = new PostOffice();
+        if (showJsonPopUp) {
+            String question = "Would you like to load your past accounts and conversations?";
+            int answer = JOptionPane.showConfirmDialog(
+                    this, question, "Post Office Loader", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (answer == JOptionPane.YES_OPTION) {
+                loadPostOffice();
+            }
         }
     }
 
@@ -144,7 +147,8 @@ public class PostOfficeAppUI extends PostOfficeUI {
         new AccountUI(acc, po);
     }
 
-    // EFFECTS: Creates a pop up that asks if the current post office should be saved
+    // EFFECTS: Creates a pop up that asks if the current post office should be
+    // saved
     public void askSavePostOffice() {
         String question = "Would you like to save the messages in the post office?";
         int answer = JOptionPane.showConfirmDialog(

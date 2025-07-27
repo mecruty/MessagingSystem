@@ -1,8 +1,7 @@
 package ui;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.Font;
+import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -17,6 +16,9 @@ public class AccountUI extends PostOfficeUI {
     JPanel namePanel;
     JLabel name;
 
+    JPanel logoutPanel;
+    JButton logout;
+
     // EFFECTS: TODO
     public AccountUI(Account acc, PostOffice po) {
         super("Digital Post Office");
@@ -30,6 +32,8 @@ public class AccountUI extends PostOfficeUI {
     @Override
     protected void addElements() {
         addNamePanel();
+        addLogoutPanel();
+
         setVisible(true);
     }
 
@@ -43,5 +47,28 @@ public class AccountUI extends PostOfficeUI {
 
         namePanel.add(name);
         add(namePanel, BorderLayout.NORTH);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Creates logout button at bottom
+    private void addLogoutPanel() {
+        logoutPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        logoutPanel.setBorder(new EmptyBorder(0, 10, 0, 0));
+        logout = new JButton("Logout");
+        logout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                logout();
+            }
+        });
+        logoutPanel.add(logout);
+        add(logoutPanel, BorderLayout.SOUTH);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Changes UI to main menu, disposing this
+    private void logout() {
+        dispose();
+        new PostOfficeAppUI(false, po);
     }
 }
