@@ -3,7 +3,7 @@ package ui;
 import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.*;
 
 // TODO
 public class LoginForm extends JPanel {
@@ -49,7 +49,7 @@ public class LoginForm extends JPanel {
         add(submitLogin);
         add(status);
     }
-    
+
     // EFFECTS: Adds an action listener for the submit button
     private ActionListener addSubmitActionListener() {
         return new ActionListener() {
