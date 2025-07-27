@@ -1,29 +1,65 @@
 {
-    "bob": {
-        "password": "2345",
-        "name": "bob",
+    "Charles": {
+        "password": "3456",
+        "name": "Charles",
         "conversations": {}
     },
-    "alice": {
+    "Bob": {
+        "password": "2345",
+        "name": "Bob",
+        "conversations": {"Charles": [{
+            "sender": "Charles",
+            "value": "Hi!!"
+        }]}
+    },
+    "Alice": {
         "password": "1234",
-        "name": "alice",
-        "conversations": {"bob": [
-            {
-                "sender": "alice",
-                "value": "hi"
-            },
-            {
-                "sender": "bob",
-                "value": "hello"
-            },
-            {
-                "sender": "bob",
-                "value": "How are you?"
-            },
-            {
-                "sender": "alice",
-                "value": "good"
-            }
-        ]}
+        "name": "Alice",
+        "conversations": {
+            "Charles": [
+                {
+                    "sender": "Charles",
+                    "value": "Hi there"
+                },
+                {
+                    "sender": "Charles",
+                    "value": "I'm charles"
+                },
+                {
+                    "sender": "Alice",
+                    "value": "Hi charles, nice to meet you"
+                },
+                {
+                    "sender": "Charles",
+                    "value": "thanks"
+                },
+                {
+                    "sender": "Charles",
+                    "value": "what are you doing?"
+                },
+                {
+                    "sender": "Alice",
+                    "value": "not much, you?"
+                }
+            ],
+            "Bob": [
+                {
+                    "sender": "Bob",
+                    "value": "hi"
+                },
+                {
+                    "sender": "Bob",
+                    "value": "hello"
+                },
+                {
+                    "sender": "Bob",
+                    "value": "How are you?"
+                },
+                {
+                    "sender": "Alice",
+                    "value": "good"
+                }
+            ]
+        }
     }
 }

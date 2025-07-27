@@ -79,7 +79,7 @@ public class Account {
         for (Account otherAcc : convos) {
             String otherAccName = otherAcc.getName();
             // To reduce storing conversations twice
-            if (otherAccName.compareTo(name) == 1) {
+            if (otherAccName.compareTo(name) > 0) {
                 json.put(otherAccName, conversations.get(otherAcc).toJson());
             }
         }
