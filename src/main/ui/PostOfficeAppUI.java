@@ -34,6 +34,9 @@ public class PostOfficeAppUI extends PostOfficeUI {
     private JPanel quitPanel;
     private JButton quitButton;
 
+    private JPanel imagePanel;
+    private JLabel image;
+
     // EFFECTS: Creates a UI for the Post Office App
     public PostOfficeAppUI(boolean showJsonPopUp, PostOffice po) {
         super("Digital Post Office");
@@ -93,9 +96,17 @@ public class PostOfficeAppUI extends PostOfficeUI {
     // EFFECTS: Creates the login panel with fields for name and password
     private void addLoginPanel() {
         loginPanel = new LoginForm(this);
+
+        ImageIcon imageIcon = new ImageIcon("./data/post office.png");
+        Image imageTemp = imageIcon.getImage().getScaledInstance(150, 150,  java.awt.Image.SCALE_SMOOTH);
+        imageIcon = new ImageIcon(imageTemp);
+        image = new JLabel(imageIcon);
+        image.setBorder(new EmptyBorder(0, 50, 0, 0));
+
         // Creating a temp panel to put flowlayout in boxlayout
         JPanel wrapper = new JPanel();
         wrapper.add(loginPanel);
+        wrapper.add(image);
         add(wrapper, BorderLayout.CENTER);
     }
 
