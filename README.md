@@ -23,5 +23,6 @@ I like this idea because there are many more possibilites that could be added on
 - As a user, I want to be able to receive messages and view a past conversation.
 - As a user, I want to be able to set a password to my account.
 - As a user, I want to be able to delete my messages.
+- As a user, I want to be able sort my messages by oldest and newest.
 - As a user, when I quit from the application, I want to be given the option to save all accounts and conversations.
 - As a user, when I start the application, I want to be given the option to load all past accounts and conversations.
