@@ -15,7 +15,8 @@ import model.PostOffice;
 
 // Clickable list modelled after:
 // stackoverflow.com/questions/14625091/create-a-list-of-entries-and-make-each-entry-clickable
-// TODO class documentation
+
+// A UI for the screen aftering entering an account
 public class AccountUI extends PostOfficeUI {
 
     private Account acc;
@@ -38,7 +39,7 @@ public class AccountUI extends PostOfficeUI {
     private JPanel logoutPanel;
     private JButton logout;
 
-    // EFFECTS: TODO
+    // EFFECTS: Creates a UI for the account screen
     public AccountUI(Account acc, PostOffice po) {
         super("Digital Post Office");
         this.acc = acc;
@@ -48,7 +49,7 @@ public class AccountUI extends PostOfficeUI {
     }
 
     // MODIFIES: this
-    // EFFECTS: TODO
+    // EFFECTS: Adds major elements to the JFrame
     @Override
     protected void addElements() {
         addNamePanel();
@@ -127,8 +128,6 @@ public class AccountUI extends PostOfficeUI {
     // EFFECTS: Initalizes text area in center of UI
     private void initializeConversation() {
         conversation = new JTextArea();
-        // TODO
-        // conversation.setColumns(35);
         conversation.setRows(40);
         conversation.setEditable(false);
         conversation.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 15));

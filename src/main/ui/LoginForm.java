@@ -5,7 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-// TODO
+// A UI for the login form of the Post Office App
 public class LoginForm extends JPanel {
 
     private PostOfficeAppUI parent;

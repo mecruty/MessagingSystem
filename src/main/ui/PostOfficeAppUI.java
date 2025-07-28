@@ -13,10 +13,9 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 // Modelled after:
-// github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Starter (General)
-// docs.oracle.com/javase/tutorial/uiswing/layout (Layouts)
+// github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Starter
 
-// TODO add class documentation
+// A UI for the post office app menu screen
 public class PostOfficeAppUI extends PostOfficeUI {
 
     private static final String JSON_LOCATION = "./data/PostOffice.json";
@@ -34,7 +33,6 @@ public class PostOfficeAppUI extends PostOfficeUI {
     private JPanel quitPanel;
     private JButton quitButton;
 
-    private JPanel imagePanel;
     private JLabel image;
 
     // EFFECTS: Creates a UI for the Post Office App
@@ -47,7 +45,7 @@ public class PostOfficeAppUI extends PostOfficeUI {
     }
 
     // MODIFIES: this
-    // EFFECTS: TODO
+    // EFFECTS: Creates Json readers, writers, and loads the Post Office if needed
     private void initializeFields() {
         reader = new JsonReader(JSON_LOCATION);
         writer = new JsonWriter(JSON_LOCATION);
@@ -62,14 +60,14 @@ public class PostOfficeAppUI extends PostOfficeUI {
     }
 
     // MODIFIES: this
-    // EFFECTS: TODO
+    // EFFECTS: Adds major elements to the JFrame
     @Override
     protected void addElements() {
-        // TODO
+
         addTitlePanel();
         addLoginPanel();
         addQuitPanel();
-        // TODO
+
         setVisible(true);
     }
 
@@ -126,7 +124,7 @@ public class PostOfficeAppUI extends PostOfficeUI {
         add(quitPanel, BorderLayout.SOUTH);
     }
 
-    // MODIFIES: TODO
+    // MODIFIES: this
     // EFFECTS: Processes user input for logging into an account
     public void login(String name, String password) {
         if (po.contains(name)) {
@@ -175,9 +173,8 @@ public class PostOfficeAppUI extends PostOfficeUI {
             writer.openWriter();
             writer.writeToFile(po);
             writer.closeWriter();
-            // System.out.println("\nPost office successfuly saved"); TODO
         } catch (IOException e) {
-            // System.out.println("\nFile saving to " + JSON_LOCATION + " has failed"); TODO
+            JOptionPane.showMessageDialog(this, "File saving to " + JSON_LOCATION + " has failed");
         }
     }
 
@@ -186,10 +183,8 @@ public class PostOfficeAppUI extends PostOfficeUI {
     private void loadPostOffice() {
         try {
             po = reader.read();
-            // System.out.println("\nPost office successfully loaded"); TODO
         } catch (IOException e) {
-            // System.out.println("\nFile loading from " + JSON_LOCATION + " has failed");
-            // TODO
+            JOptionPane.showMessageDialog(this, "File loading from " + JSON_LOCATION + " has failed");
         }
     }
 

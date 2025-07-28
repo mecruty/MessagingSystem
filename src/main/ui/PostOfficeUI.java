@@ -6,7 +6,7 @@ import javax.swing.*;
 
 import model.PostOffice;
 
-// TODO
+// A JFrame of dimensions 800x600 representing a screen of the UI
 public abstract class PostOfficeUI extends JFrame {
 
     public static final int WIDTH = 800;
@@ -30,7 +30,7 @@ public abstract class PostOfficeUI extends JFrame {
     private void initializeDefaultGraphics() {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(WIDTH, HEIGHT));
-        //setResizable(false); //TODO
+        //setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
