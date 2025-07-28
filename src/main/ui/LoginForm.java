@@ -24,7 +24,7 @@ public class LoginForm extends JPanel {
         this.parent = parent;
 
         askForName = new JLabel("Enter your username:");
-        askForName.setBorder(new EmptyBorder(0, 0, 20, 0));
+        askForName.setBorder(new EmptyBorder(50, 0, 20, 0));
         askForPassword = new JLabel("Enter your password:");
         askForPassword.setBorder(new EmptyBorder(20, 0, 20, 0));
 
@@ -34,7 +34,7 @@ public class LoginForm extends JPanel {
         submitLogin.addActionListener(addSubmitActionListener());
 
         status = new JLabel("");
-        status.setBorder(new EmptyBorder(40, 0, 0, 0));
+        status.setBorder(new EmptyBorder(20, 0, 0, 0));
 
         addAll();
     }
