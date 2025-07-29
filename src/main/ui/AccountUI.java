@@ -1,6 +1,5 @@
 package ui;
 
-import java.util.*;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
@@ -33,8 +32,9 @@ public class AccountUI extends PostOfficeUI {
     private JTextField textBox;
 
     private JPanel featurePanel;
-    private JButton delete;
+    private JButton createConversation;
     private JButton sort;
+    private JButton delete;
 
     private JPanel logoutPanel;
     private JButton logout;
@@ -97,12 +97,23 @@ public class AccountUI extends PostOfficeUI {
     // EFFECTS: Sets values for list on left of UI
     private void initializeAccounts() {
         accounts = new JList<>();
-        List<String> accsWithoutSelf = new ArrayList<>(Arrays.asList(po.getAccounts().keySet().toArray(new String[0])));
-        accsWithoutSelf.remove(acc.getName());
+        setAccountsModel();
 
+        accounts.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                loadAccountMessages();
+            }
+        });
+        accounts.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Sets the model of the list of accounts
+    private void setAccountsModel() {
         // Copied
         accounts.setModel(new AbstractListModel<String>() {
-            String[] strings = accsWithoutSelf.toArray(new String[0]);
+            String[] strings = acc.getConversations().keySet().toArray(new String[0]);
 
             @Override
             public int getSize() {
@@ -114,14 +125,6 @@ public class AccountUI extends PostOfficeUI {
                 return strings[i];
             }
         });
-
-        accounts.addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                loadAccountMessages();
-            }
-        });
-        accounts.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
     }
 
     // MODIFIES: this
@@ -181,11 +184,27 @@ public class AccountUI extends PostOfficeUI {
         JPanel wrapper = new JPanel();
         wrapper.setBorder(new EmptyBorder(0, 0, 0, 20));
 
-        featurePanel = new JPanel(new GridLayout(0,1));
+        featurePanel = new JPanel(new GridLayout(0, 1));
+
+        createConversation = new JButton("New Conversation");
         delete = new JButton("Delete");
         sort = new JButton("Sort: Newest");
 
-        delete.addActionListener(new ActionListener() {
+        delete.addActionListener(addDeleteActionListener());
+        sort.addActionListener(addSubmitActionListener());
+        createConversation.addActionListener(addCreateConversationActionListener());
+
+        featurePanel.add(createConversation);
+        featurePanel.add(sort);
+        featurePanel.add(delete);
+        wrapper.add(featurePanel);
+        add(wrapper, BorderLayout.EAST);
+    }
+
+    // EFFECTS: Adds an action listener for the sort button, deleting the latest
+    // message
+    private ActionListener addDeleteActionListener() {
+        return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (accounts.getSelectedValue() != null) {
@@ -194,17 +213,11 @@ public class AccountUI extends PostOfficeUI {
                     loadAccountMessages();
                 }
             }
-        });
-
-        sort.addActionListener(addSubmitActionListener());
-
-        featurePanel.add(sort);
-        featurePanel.add(delete);
-        wrapper.add(featurePanel);
-        add(wrapper, BorderLayout.EAST);
+        };
     }
 
-    // EFFECTS: Adds an action listener for the sort button, swapping between sorting oldest and newest
+    // EFFECTS: Adds an action listener for the sort button, swapping between
+    // sorting oldest and newest
     private ActionListener addSubmitActionListener() {
         return new ActionListener() {
             @Override
@@ -221,6 +234,40 @@ public class AccountUI extends PostOfficeUI {
                 }
             }
         };
+    }
+
+    // EFFECTS: Adds an action listener for the create conversation button
+    private ActionListener addCreateConversationActionListener() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                createConvo();
+            }
+        };
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Displays according message for conversation creation depending on user input
+    private void createConvo() {
+        String message = "Who would you like to create a conversation with?";
+        String answer = JOptionPane.showInputDialog(message);
+        if (!po.contains(answer)) {
+            String nonExistentMessage = "That person does not exist.";
+            JOptionPane.showMessageDialog(null, nonExistentMessage);
+        } else {
+            Account otherAcc = po.getAccount(answer);
+            if (acc == otherAcc) {
+                String selfMessage = "You cannot create a conversation with yourself.";
+                JOptionPane.showMessageDialog(null, selfMessage);
+            } else if (acc.getConversations().containsKey(otherAcc)) {
+                String doubleMessage = "You already have a conversation with that person.";
+                JOptionPane.showMessageDialog(null, doubleMessage);
+            } else {
+                acc.beginConversation(otherAcc);
+                dispose();
+                new AccountUI(acc, po);
+            }
+        }
     }
 
     // MODIFIES: this
