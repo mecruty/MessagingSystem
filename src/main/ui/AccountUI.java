@@ -113,7 +113,7 @@ public class AccountUI extends PostOfficeUI {
     private void setAccountsModel() {
         // Copied
         accounts.setModel(new AbstractListModel<String>() {
-            String[] strings = acc.getConversations().keySet().toArray(new String[0]);
+            String[] strings = acc.getConversations().keySet().stream().map(Account::getName).toArray(String[]::new);
 
             @Override
             public int getSize() {
