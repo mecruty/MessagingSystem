@@ -201,8 +201,7 @@ public class AccountUI extends PostOfficeUI {
         add(wrapper, BorderLayout.EAST);
     }
 
-    // EFFECTS: Adds an action listener for the sort button, deleting the latest
-    // message
+    // EFFECTS: Adds an action listener for the sort button, deleting the latest message
     private ActionListener addDeleteActionListener() {
         return new ActionListener() {
             @Override
@@ -216,8 +215,7 @@ public class AccountUI extends PostOfficeUI {
         };
     }
 
-    // EFFECTS: Adds an action listener for the sort button, swapping between
-    // sorting oldest and newest
+    // EFFECTS: Adds an action listener for the sort button, swapping between sorting oldest and newest
     private ActionListener addSubmitActionListener() {
         return new ActionListener() {
             @Override

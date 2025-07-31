@@ -59,7 +59,30 @@
                     "sender": "Alice",
                     "value": "good"
                 }
+            ],
+            "David": [
+                {
+                    "sender": "Alice",
+                    "value": "..."
+                },
+                {
+                    "sender": "David",
+                    "value": "..."
+                },
+                {
+                    "sender": "Alice",
+                    "value": "..."
+                },
+                {
+                    "sender": "David",
+                    "value": "..."
+                }
             ]
         }
+    },
+    "David": {
+        "password": "4567",
+        "name": "David",
+        "conversations": {}
     }
 }

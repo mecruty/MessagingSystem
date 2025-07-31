@@ -101,7 +101,7 @@ public class PostOfficeAppUI extends PostOfficeUI {
         image = new JLabel(imageIcon);
         image.setBorder(new EmptyBorder(0, 50, 0, 0));
 
-        // Creating a temp panel to put flowlayout in boxlayout
+        // Creating a temp panel to put flowlayout over boxlayout
         JPanel wrapper = new JPanel();
         wrapper.add(loginPanel);
         wrapper.add(image);
