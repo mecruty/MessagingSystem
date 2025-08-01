@@ -4,18 +4,13 @@
 
 A regular post office stores letters so people can send and receive mail.
 
-This would be a digital post office, consisting of a central system where, one user at a time, could create an account, login, receive messages, and send messages to other accounts.
+A digital post office, consisting of a central system where, one user at a time, could create an account, login, receive messages, and send messages to other accounts.
 
 ### Uses
 
 - To share messages without internet.
 - As a post office where mail lasts indefinitely.
 - In a more magical world, maybe as a secret system, where spies could exchange messages without ever meeting.
-
-
-### Personal Interest
-
-I like this idea because there are many more possibilites that could be added onto the basic idea. For example, accounts could be password protected, there could be notifications for unread messages, there could be anonymous messages, *etc...*
 
 ## User Stories
 
@@ -26,3 +21,11 @@ I like this idea because there are many more possibilites that could be added on
 - As a user, I want to be able sort my messages by oldest and newest.
 - As a user, when I quit from the application, I want to be given the option to save all accounts and conversations.
 - As a user, when I start the application, I want to be given the option to load all past accounts and conversations.
+
+## Instructions for End User
+- You can add a message to a conversation by typing in the text box and entering
+- You can delete messages *(First required action)* by clicking the delete button in an account
+- You can sort by oldest/newest *(Second required action)* by clicking the sort button in an account
+- You can locate my visual component as the image of a Post Office
+- You can save the state of my application by quitting, and selecting "yes" on the pop up
+- You can reload the state of my application by selecting "yes" on the initial pop up
