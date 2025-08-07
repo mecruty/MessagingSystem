@@ -11,6 +11,8 @@ import model.Account;
 import model.PostOffice;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import model.Event;
+import model.EventLog;
 
 // Modelled after:
 // github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Starter
@@ -118,6 +120,8 @@ public class PostOfficeAppUI extends PostOfficeUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 askSavePostOffice();
+                printLog();
+                System.exit(0);
             }
         });
         quitPanel.add(quitButton);
@@ -164,7 +168,13 @@ public class PostOfficeAppUI extends PostOfficeUI {
         if (answer == JOptionPane.YES_OPTION) {
             savePostOffice();
         }
-        System.exit(0);
+    }
+
+    // EFFECTS: prints the EventLog to console
+    public void printLog() {
+        for (Event next : EventLog.getInstance()) {
+            System.out.println(next.toString());
+        }
     }
 
     // EFFECTS: Saves the PostOffice to file

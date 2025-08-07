@@ -25,6 +25,7 @@ public class Account {
         Conversation convo = new Conversation();
         conversations.put(acc, convo);
         acc.getConversations().put(this, convo);
+        EventLog.getInstance().logEvent(new Event(name + " created a new conversation with " + acc.getName()));
     }
 
     // REQUIRES: numMessagesToRead > 0, startIndex >= 0, startIndex < conversationsget(acc).getMessages().size()
@@ -41,6 +42,7 @@ public class Account {
     public void sendMessage(Account acc, Message m) {
         Conversation convo = conversations.get(acc);
         convo.addMessage(m);
+        EventLog.getInstance().logEvent(new Event(name + " sent a message to " + acc.getName()));
     }
 
     // MODIFIES: conversations.get(acc)
@@ -55,6 +57,7 @@ public class Account {
                 convo.removeMessage();
             }
         }
+        EventLog.getInstance().logEvent(new Event(name + " deleted a message with " + acc.getName()));
     }
 
     // EFFECTS: Returns true if given name and password matches this.name and

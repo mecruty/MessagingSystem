@@ -29,3 +29,52 @@ A digital post office, consisting of a central system where, one user at a time,
 - You can locate my visual component as the image of a Post Office
 - You can save the state of my application by quitting, and selecting "yes" on the pop up
 - You can reload the state of my application by selecting "yes" on the initial pop up
+
+# Phase 4: Task 2
+```Wed Aug 06 23:23:17 PDT 2025
+Account Charles created.
+Wed Aug 06 23:23:17 PDT 2025
+Account Bob created.
+Wed Aug 06 23:23:17 PDT 2025
+Account Alice created.
+Wed Aug 06 23:23:17 PDT 2025
+Account David created.
+Wed Aug 06 23:23:17 PDT 2025
+Bob created a new conversation with Charles
+Wed Aug 06 23:23:17 PDT 2025
+Charles sent a message to Bob
+Wed Aug 06 23:23:17 PDT 2025
+Alice created a new conversation with Charles
+Wed Aug 06 23:23:17 PDT 2025
+Charles sent a message to Alice
+Wed Aug 06 23:23:17 PDT 2025
+Charles sent a message to Alice
+Wed Aug 06 23:23:17 PDT 2025
+Alice sent a message to Charles
+Wed Aug 06 23:23:17 PDT 2025
+Charles sent a message to Alice
+Wed Aug 06 23:23:17 PDT 2025
+Charles sent a message to Alice
+Wed Aug 06 23:23:17 PDT 2025
+Alice sent a message to Charles
+Wed Aug 06 23:23:17 PDT 2025
+Alice created a new conversation with Bob
+Wed Aug 06 23:23:17 PDT 2025
+Bob sent a message to Alice
+Wed Aug 06 23:23:17 PDT 2025
+Bob sent a message to Alice
+Wed Aug 06 23:23:17 PDT 2025
+Bob sent a message to Alice
+Wed Aug 06 23:23:17 PDT 2025
+Alice sent a message to Bob
+Wed Aug 06 23:23:17 PDT 2025
+Alice created a new conversation with David
+Wed Aug 06 23:23:17 PDT 2025
+Alice sent a message to David
+Wed Aug 06 23:23:17 PDT 2025
+David sent a message to Alice
+Wed Aug 06 23:23:17 PDT 2025
+Alice sent a message to David
+Wed Aug 06 23:23:17 PDT 2025
+David sent a message to Alice
+```

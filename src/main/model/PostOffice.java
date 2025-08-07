@@ -18,6 +18,7 @@ public class PostOffice {
     // EFFECTS: Adds an empty account to this
     public void addAccount(String name, Account acc) {
         accounts.put(name, acc);
+        EventLog.getInstance().logEvent(new Event("Account " + name + " created."));
     }
 
     // EFFECTS: Returns an account with given name in getAccounts()
