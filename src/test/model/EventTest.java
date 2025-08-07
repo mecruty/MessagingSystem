@@ -28,6 +28,7 @@ public class EventTest {
 	@Test
 	public void testEvent() {
 		assertEquals("Alice created an account with Bob", e.getDescription());
+        // Test commented out as it was not running consistently (due to stipulation mentioned above)
 		//assertEquals(d, e.getDate());
 	}
 

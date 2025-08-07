@@ -78,3 +78,7 @@ Alice sent a message to David
 Wed Aug 06 23:23:17 PDT 2025
 David sent a message to Alice
 ```
+# Phase 4: Task 3
+One part I'd like to refactor would help decrease the coupling between Account, Conversation, and Message. Specifically I want to remove the loop visible in the UML diagram. Currently, an Account knows about a collection of Conversations, a Conversation knows about a collection of Messages, and a Message knows about one Account.
+
+I think it'd be more clear if both *Account + Conversation* and *Conversation + Message* had one-to-many bidirection relationships. This way it'd be more evident how the classes are actually supposed to relate to each other.
