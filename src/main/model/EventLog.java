@@ -36,7 +36,7 @@ public class EventLog implements Iterable<Event> {
         }
 
         return theLog;
-    }
+    } 
 
     /**
      * Adds an event to the event log.

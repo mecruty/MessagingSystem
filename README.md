@@ -1,84 +1,27 @@
-# Digital Post Office 
+# Messaging App
 
-### Description
+A messaging app to store conversations between separate accounts on a single device.
 
-A regular post office stores letters so people can send and receive mail.
+### Preset
 
-A digital post office, consisting of a central system where, one user at a time, could create an account, login, receive messages, and send messages to other accounts.
+*A preset has been included for demonstrational purposes.*
+<details>
+  <summary>Click to expand preset details</summary>
+  
+  - To use the preset, click yes upon first loading.
+  - Preset accounts include:
+    - Name: Alice
+        - Password: 1234
+    - Name: Bob
+        - Password: 2345
+    - Name: Charles
+        - Password: 3456
+    - Name: David
+        - Password: 4567    
+</details>
 
-### Uses
+### Instructions
 
-- To share messages without internet.
-- As a post office where mail lasts indefinitely.
-- In a more magical world, maybe as a secret system, where spies could exchange messages without ever meeting.
-
-## User Stories
-
-- As a user, I want to be able to add a message to continue a particular conversation.
-- As a user, I want to be able to receive messages and view a past conversation.
-- As a user, I want to be able to set a password to my account.
-- As a user, I want to be able to delete my messages.
-- As a user, I want to be able sort my messages by oldest and newest.
-- As a user, when I quit from the application, I want to be given the option to save all accounts and conversations.
-- As a user, when I start the application, I want to be given the option to load all past accounts and conversations.
-
-## Instructions for End User
-- You can add a message to a conversation by typing in the text box and entering
-- You can delete messages *(First required action)* by clicking the delete button in an account
-- You can sort by oldest/newest *(Second required action)* by clicking the sort button in an account
-- You can locate my visual component as the image of a Post Office
-- You can save the state of my application by quitting, and selecting "yes" on the pop up
-- You can reload the state of my application by selecting "yes" on the initial pop up
-
-# Phase 4: Task 2
-```Wed Aug 06 23:23:17 PDT 2025
-Account Charles created.
-Wed Aug 06 23:23:17 PDT 2025
-Account Bob created.
-Wed Aug 06 23:23:17 PDT 2025
-Account Alice created.
-Wed Aug 06 23:23:17 PDT 2025
-Account David created.
-Wed Aug 06 23:23:17 PDT 2025
-Bob created a new conversation with Charles
-Wed Aug 06 23:23:17 PDT 2025
-Charles sent a message to Bob
-Wed Aug 06 23:23:17 PDT 2025
-Alice created a new conversation with Charles
-Wed Aug 06 23:23:17 PDT 2025
-Charles sent a message to Alice
-Wed Aug 06 23:23:17 PDT 2025
-Charles sent a message to Alice
-Wed Aug 06 23:23:17 PDT 2025
-Alice sent a message to Charles
-Wed Aug 06 23:23:17 PDT 2025
-Charles sent a message to Alice
-Wed Aug 06 23:23:17 PDT 2025
-Charles sent a message to Alice
-Wed Aug 06 23:23:17 PDT 2025
-Alice sent a message to Charles
-Wed Aug 06 23:23:17 PDT 2025
-Alice created a new conversation with Bob
-Wed Aug 06 23:23:17 PDT 2025
-Bob sent a message to Alice
-Wed Aug 06 23:23:17 PDT 2025
-Bob sent a message to Alice
-Wed Aug 06 23:23:17 PDT 2025
-Bob sent a message to Alice
-Wed Aug 06 23:23:17 PDT 2025
-Alice sent a message to Bob
-Wed Aug 06 23:23:17 PDT 2025
-Alice created a new conversation with David
-Wed Aug 06 23:23:17 PDT 2025
-Alice sent a message to David
-Wed Aug 06 23:23:17 PDT 2025
-David sent a message to Alice
-Wed Aug 06 23:23:17 PDT 2025
-Alice sent a message to David
-Wed Aug 06 23:23:17 PDT 2025
-David sent a message to Alice
-```
-# Phase 4: Task 3
-One part I'd like to refactor would help decrease the coupling between Account, Conversation, and Message. Specifically I want to remove the loop visible in the UML diagram. Currently, an Account knows about a collection of Conversations, a Conversation knows about a collection of Messages, and a Message knows about one Account.
-
-I think it'd be more clear if both *Account + Conversation* and *Conversation + Message* had one-to-many bidirection relationships. This way it'd be more evident how the classes are actually supposed to relate to each other.
+- To create/login to an account, enter a name and password, then follow the prompt.
+- You can then send/delete messages and create new conversations.
+- Ensure to click yes to save if you wish to access the same accounts/conversations again.
